@@ -385,8 +385,11 @@ bool GamePlay::Save_Data_Check()
 	{
 		Cout_Save_Data(Width, Height);
 		Select = m_Draw.MenuSelectCursor(SAVE_FILE + 1, 2, Width - 2, Height);
-		if (Monster_Data_Check(Select) && Player_Data_Check(Select) && (!Get_Weapon()))
+		if (Monster_Data_Check(Select) && Player_Data_Check(Select) && Get_Weapon() && Select != SAVE_FILE + 1)
+		{
 			Load_Data(Select);
+			return true;
+		}
 		else
 		{
 			m_Draw.BoxErase(WIDTH, HEIGHT);
@@ -423,6 +426,7 @@ void GamePlay::Delete_Data()
 		delete *iter;
 	m_vecMonster.clear();
 
+	m_pHero = NULL;
 	delete m_pHero;
 	m_Shop.Delete_Weapon();
 }
@@ -435,7 +439,6 @@ void GamePlay::Main_Menu()
 	m_Draw.DrawMidText("Load Game", WIDTH, HEIGHT * 0.6f);
 	m_Draw.DrawMidText("Game Exit", WIDTH, HEIGHT * 0.7f);
 }
-
 
 void GamePlay::Map()
 {

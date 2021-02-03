@@ -34,28 +34,29 @@ void Character::Get_Loot(Character * Fighter)
 	m_Information.Gold += Fighter->Out_Gold();
 	getch();
 	if (m_Information.Exp >= m_Information.Exp_Max)
-	{
 		Level_Up();
-		getch();
-	}
 }
 
 void Character::Level_Up()
 {
 	int Up;
-	m_Draw.BoxErase(WIDTH, HEIGHT);
-	m_Draw.DrawMidText(m_Information.Name + "레벨 업 ", WIDTH, HEIGHT*0.4f);
-	Up = rand() % 5 + 1;
-	m_Information.Demage += Up;
-	m_Draw.DrawMidText("공격력 " + to_string(Up) + " 증가!!", WIDTH, HEIGHT*0.5f);
-	Up = rand() % 5 + 5;
-	m_Information.Life_Max += Up;
-	m_Draw.DrawMidText("생명력 " + to_string(Up) + " 증가!!", WIDTH, HEIGHT*0.6f);
+	while (m_Information.Exp >= m_Information.Exp_Max)
+	{
+		m_Draw.BoxErase(WIDTH, HEIGHT);
+		m_Draw.DrawMidText(m_Information.Name + "레벨 업 ", WIDTH, HEIGHT*0.4f);
+		Up = rand() % 5 + 1;
+		m_Information.Demage += Up;
+		m_Draw.DrawMidText("공격력 " + to_string(Up) + " 증가!!", WIDTH, HEIGHT*0.5f);
+		Up = rand() % 6 + 5;
+		m_Information.Life_Max += Up;
+		m_Draw.DrawMidText("생명력 " + to_string(Up) + " 증가!!", WIDTH, HEIGHT*0.6f);
 
-	m_Information.Exp_Max += 3;
-	m_Information.Exp = 0;
-	m_Information.Level++;
-	m_Information.Life = m_Information.Life_Max;
+		m_Information.Exp -= m_Information.Exp_Max;
+		m_Information.Exp_Max += 3;
+		m_Information.Level++;
+		m_Information.Life = m_Information.Life_Max;
+		getch();
+	}
 
 }
 

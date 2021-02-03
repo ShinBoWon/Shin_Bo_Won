@@ -8,9 +8,10 @@ Player::Player()
 
 FIGHT Player::Attack_Try()
 {
-	char ch = getch();
+	char ch;
 	while (1)
 	{
+		ch = getch();
 		switch (ch)
 		{
 		case ROCK:
@@ -19,8 +20,6 @@ FIGHT Player::Attack_Try()
 			return FIGHT_SCISSORS;
 		case PAPER:
 			return FIGHT_PAPER;
-		default:
-			break;
 		}
 	}
 }
