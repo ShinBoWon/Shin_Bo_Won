@@ -5,9 +5,9 @@ GamePlay::GamePlay()
 	srand(time(NULL)); // 렌덤 시간 조절
 
 	char buf[256];
-	sprintf(buf, "mode con: lines=%d cols=%d" ,  HEIGHT + 1 , WIDTH * 2); // 박스 크기 조절
+	sprintf(buf, "mode con: lines=%d cols=%d", HEIGHT + 1, WIDTH * 2); // 박스 크기 조절
 	system(buf);
-	
+
 }
 
 void GamePlay::Play_Menu()
@@ -42,8 +42,8 @@ void GamePlay::Dongeon_Menu(int Height)
 	m_Draw.BoxErase(WIDTH, HEIGHT);
 	m_Draw.DrawMidText("----- 던전 입구 -----", WIDTH, Height);
 	for (int i = 0; i < m_iMonster_Count; i++)
-		m_vecMonster[i]->Monster_Dongeon(i, Height + 2 *(1 + i));
-	m_Draw.DrawMidText("Exit", WIDTH, Height + ( m_iMonster_Count + 1 ) * 2);
+		m_vecMonster[i]->Monster_Dongeon(i, Height + 2 * (1 + i));
+	m_Draw.DrawMidText("Exit", WIDTH, Height + (m_iMonster_Count + 1) * 2);
 }
 
 void GamePlay::Dongeon() // 던전 목록 밑 선택
@@ -53,7 +53,7 @@ void GamePlay::Dongeon() // 던전 목록 밑 선택
 	while (m_bGame_Over)
 	{
 		Dongeon_Menu(Height); // 메뉴 그리기
-		Sercet = m_Draw.MenuSelectCursor(m_iMonster_Count + 1, 2, WIDTH / 4 , Height + 2);// 메뉴중 택 1
+		Sercet = m_Draw.MenuSelectCursor(m_iMonster_Count + 1, 2, WIDTH / 4, Height + 2);// 메뉴중 택 1
 		if (Sercet == m_iMonster_Count + 1)
 			return;
 		else
@@ -70,22 +70,22 @@ void GamePlay::Fighting(int i)
 	m_Draw.BoxErase(WIDTH, HEIGHT);
 	while (m_bGame_Over && Monster_survival) // 플레이어와 몬스터가 싸워서 둘중 하나라도 체력이 0 이 될었을 때 게임 종료 
 	{
-		
+
 		YELLOW
-			m_pHero->Out_Information(WIDTH,HEIGHT * 0.1f);
+			m_pHero->Out_Information(WIDTH, HEIGHT * 0.1f);
 		m_Draw.DrawMidText("가위 : 1   바위 : 2   보 : 3", WIDTH, HEIGHT*0.3f);
 		ORIGINAL
-		Fight_Monster.Out_Information(WIDTH, HEIGHT * 0.8f);
+			Fight_Monster.Out_Information(WIDTH, HEIGHT * 0.8f);
 		m_Draw.DrawMidText("-------------------------- vs --------------------------", WIDTH, HEIGHT*0.5);
-		
+
 
 		P1 = m_pHero->Attack_Try();
 		Mons = Fight_Monster.Attack_Try();
- 		Battle(P1, Mons, Fight_Monster);
+		Battle(P1, Mons, Fight_Monster);
 		Fight_Draw(WIDTH, HEIGHT*0.4f, P1);
-		Fight_Draw(WIDTH, HEIGHT*0.65f,Mons);
+		Fight_Draw(WIDTH, HEIGHT*0.65f, Mons);
 
-		Verdit(i, Monster_survival ,Fight_Monster);
+		Verdit(i, Monster_survival, Fight_Monster);
 		// 만약에 몹이나 플레이가 죽었을 때 걸리는 부분
 	}
 }
@@ -98,7 +98,7 @@ void GamePlay::Battle(FIGHT P1, FIGHT P2, Monster &Fighter)
 		if (P2 == FIGHT_SCISSORS)
 		{
 			m_Draw.DrawMidText("Win", WIDTH, HEIGHT*0.45f);
-			m_Draw.DrawMidText("Lose", WIDTH, HEIGHT*0.6f);	
+			m_Draw.DrawMidText("Lose", WIDTH, HEIGHT*0.6f);
 			Fighter.Hit(m_pHero->Attack());
 		}
 		else if (P2 == FIGHT_PAPER)
@@ -128,7 +128,7 @@ void GamePlay::Battle(FIGHT P1, FIGHT P2, Monster &Fighter)
 		if (P2 == FIGHT_ROCK)
 		{
 			m_Draw.DrawMidText("Win", WIDTH, HEIGHT*0.45f);
-			m_Draw.DrawMidText("Lose", WIDTH, HEIGHT*0.6f);		
+			m_Draw.DrawMidText("Lose", WIDTH, HEIGHT*0.6f);
 			Fighter.Hit(m_pHero->Attack());
 		}
 		else if (P2 == FIGHT_SCISSORS)
@@ -166,7 +166,7 @@ void GamePlay::Get_Fight_Monster_Data(Monster& Fight_Monster, int i)
 	Fight_Monster.Get_Data(Data, false);
 }
 
-void GamePlay::Verdit(int i, bool &Monster_survival , Monster Fighter) // 체력 소진 했을때 몬스터 밑 플레이어 상황
+void GamePlay::Verdit(int i, bool &Monster_survival, Monster Fighter) // 체력 소진 했을때 몬스터 밑 플레이어 상황
 {
 	if (m_pHero->Check_Life() <= 0)
 		m_bGame_Over = Fighter.Fight_Win();
@@ -223,7 +223,7 @@ void GamePlay::Game()
 			m_Draw.BoxErase(WIDTH, HEIGHT);
 			for (int i = 0; i < m_iMonster_Count; i++)
 			{
-				m_vecMonster[i]->Out_Information(WIDTH,( HEIGHT + 10) * 0.1f +i *4);
+				m_vecMonster[i]->Out_Information(WIDTH, (HEIGHT + 10) * 0.1f + i * 4);
 			}
 			getch();
 			break;
@@ -316,7 +316,7 @@ bool GamePlay::New_Game()
 		return false;
 	}
 
-	
+
 	return true && Get_Weapon();
 }
 
@@ -340,7 +340,7 @@ bool GamePlay::Get_Weapon()
 bool GamePlay::Monster_Data_Check(int Count)
 {
 	ifstream load;
-	load.open("SaveMonster" + to_string(Count + 1) + ".txt");
+	load.open("SaveMonster" + to_string(Count) + ".txt");
 	if (load.is_open())
 		return true;
 	else
@@ -350,7 +350,7 @@ bool GamePlay::Monster_Data_Check(int Count)
 bool GamePlay::Player_Data_Check(int Count)
 {
 	ifstream load;
-	load.open("SavePlayer" + to_string(Count + 1) + ".txt");
+	load.open("SavePlayer" + to_string(Count) + ".txt");
 	if (load.is_open())
 		return true;
 	else
@@ -364,7 +364,7 @@ void GamePlay::Cout_Save_Data(int Width, int Height)
 	m_Draw.BoxErase(WIDTH, HEIGHT);
 	for (int i = 0; i < SAVE_FILE; i++)
 	{
-		if (Monster_Data_Check(i) && Player_Data_Check(i))
+		if (Monster_Data_Check(i + 1) && Player_Data_Check(i + 1))
 			OX = "o";
 		else
 			OX = "X";
@@ -376,8 +376,8 @@ void GamePlay::Cout_Save_Data(int Width, int Height)
 bool GamePlay::Save_Data_Check()
 {
 	int Width = WIDTH / 3, Height = HEIGHT * 0.1f + 2, Select;
-	
-	
+
+
 	while (1)
 	{
 		Cout_Save_Data(Width, Height);
@@ -400,7 +400,7 @@ bool GamePlay::Save_Data_Check()
 }
 
 void GamePlay::Load_Data(int Number)
-{	
+{
 	if (Player_Data_Check(Number - 1) && Monster_Data_Check(Number - 1))
 	{
 		Weapon * Data;
