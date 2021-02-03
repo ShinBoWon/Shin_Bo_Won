@@ -25,7 +25,7 @@ void Character::Out_Information(int x, int y)
 		m_Draw.DrawMidText("무기타입 : " + m_Weapon->Out_Kind() + " 무기 이름 :" + m_Weapon->Out_Name() + "공격력 : " + to_string(m_Weapon->Out_Demage()), x*0.2f, y + 4);
 }
 
-void Character::Get_Loot(Character * Fighter)
+void Character::Fight_Win(Character * Fighter)
 {
 	m_Draw.BoxErase(WIDTH, HEIGHT);
 	m_Draw.DrawMidText(m_Information.Name + " 승리!!", WIDTH, HEIGHT * 0.3f );

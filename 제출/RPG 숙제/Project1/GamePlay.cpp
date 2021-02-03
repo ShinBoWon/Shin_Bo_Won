@@ -169,14 +169,11 @@ void GamePlay::Get_Fight_Monster_Data(Monster& Fight_Monster, int i)
 void GamePlay::Verdit(int i, bool &Monster_survival , Monster Fighter) // 체력 소진 했을때 몬스터 밑 플레이어 상황
 {
 	if (m_pHero->Check_Life() <= 0)
-	{
-		m_bGame_Over = false;
-		Fighter.Get_Loot(m_pHero);
-	}
+		m_bGame_Over = Fighter.Fight_Win();
 	else if (Fighter.Check_Life() <= 0)
 	{
 		Monster_survival = false; // 몬스터가 죽은 것 이니 플레이어는 경험치를 얻고 몬스터는 리셋 데이터를 얻는다.
-		m_pHero->Get_Loot(&Fighter);
+		m_pHero->Fight_Win(&Fighter);
 	}
 }
 
