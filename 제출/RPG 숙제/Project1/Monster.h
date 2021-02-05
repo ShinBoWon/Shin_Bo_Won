@@ -7,6 +7,7 @@ public:
 	FIGHT Attack_Try();
 	void Monster_Dongeon(int i, int Height);
 	void Data_Save_Add(int Number, string File);
+	bool Fight_Win();
 
 	inline int Check_Life()
 	{

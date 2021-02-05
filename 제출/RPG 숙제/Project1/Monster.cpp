@@ -21,6 +21,16 @@ FIGHT Monster::Attack_Try()
 	}
 }
 
+bool Monster::Fight_Win()
+{
+	m_Draw.BoxErase(WIDTH, HEIGHT);
+	m_Draw.DrawMidText(m_Information.Name + " 승리 !!", WIDTH, HEIGHT * 0.3f);
+	m_Draw.DrawMidText("GAME OVER !!", WIDTH, HEIGHT*0.3f + 2);
+	m_Draw.DrawMidText("게임이 종료 됩니다.", WIDTH, HEIGHT*0.3f + 4);
+	getch();
+	return false;
+}
+
 void Monster::Monster_Dongeon(int i ,int Height)
 {
 	m_Draw.DrawMidText(to_string(i+1) + "층던전 : ["+ m_Information.Name + "]",WIDTH, Height); // 

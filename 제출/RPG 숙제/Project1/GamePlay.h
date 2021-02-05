@@ -5,6 +5,13 @@
 
 #define SAVE_FILE 10
 
+enum GAME
+{
+	GAME_NEW = 1,
+	GAME_LOAD,
+	GAME_END
+};
+
 class GamePlay
 {
 private:

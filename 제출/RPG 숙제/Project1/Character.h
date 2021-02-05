@@ -49,7 +49,7 @@ public:
 	void Hit(int Demage);
 	void Out_Information(int x, int y);
 
-	virtual void Get_Loot(Character * Fighter);
+	void Fight_Win(Character * Fighter);
 	virtual void Get_Data(Information load_Data, bool Weapon_Has);
 	
 	void Data_Save(int Number, string File);
