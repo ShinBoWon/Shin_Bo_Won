@@ -20,11 +20,13 @@ Time Time::operator+(Time time)
 {
 	time.m_iHour += m_iHour;
 	time.m_iMin += m_iMin;
+
 	while (time.m_iMin >= 60 )
 	{
 		time.m_iMin -= 60;
 		time.m_iHour++;
 	}
+
 	return time;
 }
 

@@ -10,6 +10,7 @@ public:
 	Divide(int x, int y) { m_ix = x; m_iy = y; };
 	void Print_Out() { cout << "x = " << m_ix << ", y = " << m_iy << endl; };
 	Divide operator/(Divide D1);
+	~Divide() {};
 };
 
 Divide Divide::operator/(Divide D1)

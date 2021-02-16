@@ -1,2 +1,3 @@
-﻿  Time.cpp
-  Project1.vcxproj -> D:\공부\학원공부\Project1\x64\Debug\z.exe
+﻿  소스.cpp
+c:\users\a07\desktop\shin_bo_won\제출\연산자 오버로딩 문제\연산자 오버로딩 2번 문제\project1\소스.cpp(10): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+  Project1.vcxproj -> C:\Users\A07\Desktop\Shin_Bo_Won\제출\연산자 오버로딩 문제\연산자 오버로딩 2번 문제\x64\Debug\z.exe
