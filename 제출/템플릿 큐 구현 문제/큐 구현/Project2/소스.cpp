@@ -11,6 +11,7 @@ private:
 	int m_iFront;
 	int m_iRear;
 	int m_iCount;
+
 public:
 	QUE(int s)
 	{
@@ -19,8 +20,7 @@ public:
 		m_iFront = 0;
 		m_iRear = 0;
 		m_iCount = 0;
-	};
-
+	};	 
 	void Enque(Tque Data)
 	{
 		if (m_iCount != m_isize)
