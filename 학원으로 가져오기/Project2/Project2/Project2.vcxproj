@@ -143,7 +143,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="Play.cpp" />
+    <ClCompile Include="Rank.cpp" />
+    <ClCompile Include="Ward.cpp" />
+    <ClCompile Include="WardManager.cpp" />
     <ClCompile Include="소스.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Interface.h" />
+    <ClInclude Include="Play.h" />
+    <ClInclude Include="Rank.h" />
+    <ClInclude Include="Ward.h" />
+    <ClInclude Include="WardManager.h" />
+    <ClInclude Include="mecro.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
