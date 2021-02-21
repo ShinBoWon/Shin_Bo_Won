@@ -86,7 +86,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="MapDraw.cpp" />
     <ClCompile Include="Play.cpp" />
     <ClCompile Include="Rank.cpp" />
     <ClCompile Include="Ward.cpp" />
@@ -152,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="MapDraw.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="Rank.h" />
     <ClInclude Include="Ward.h" />

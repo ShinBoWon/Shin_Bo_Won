@@ -1,10 +1,17 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <list>
+
+#include<iostream>
+#include<Windows.h>
+#include<conio.h>
+#include<string>
+#include<fstream>
+#include<time.h>
+#include<stdlib.h>
 #include <vector>
+#include <list>
 using namespace std;
 
+//////////////////////////////////////////////////////
 #define col GetStdHandle(STD_OUTPUT_HANDLE) 
 #define BLACK SetConsoleTextAttribute( col,0x0000 );
 #define DARK_BLUE SetConsoleTextAttribute( col,0x0001 );
@@ -19,3 +26,13 @@ using namespace std;
 #define HIGH_GREEN SetConsoleTextAttribute( col,0x000a );
 #define SKY_BLUE SetConsoleTextAttribute( col,0x000b );
 #define RED SetConsoleTextAttribute( col,0x000c );
+#define PLUM SetConsoleTextAttribute( col,0x000d );
+#define YELLOW SetConsoleTextAttribute( col,0x000e );
+//////////////////////////////////////////////////////
+#define _CRT_SECURE_NO_WARNINGS
+
+enum STARTTYPE
+{
+	STARTTYPE_NEWSTART,
+	STARTTYPE_LOADSTART
+};
