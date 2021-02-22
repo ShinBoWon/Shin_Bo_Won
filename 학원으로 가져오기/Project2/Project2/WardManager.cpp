@@ -1,7 +1,5 @@
 #include "WardManager.h"
 
-
-
 WardManager::WardManager()
 {
 }

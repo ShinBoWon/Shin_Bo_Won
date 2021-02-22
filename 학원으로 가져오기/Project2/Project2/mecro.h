@@ -11,9 +11,6 @@
 #include <list>
 using namespace std;
 
-#define WIDTH 35
-#define HEIGHT 65
-
 //////////////////////////////////////////////////////
 #define col GetStdHandle(STD_OUTPUT_HANDLE) 
 #define BLACK SetConsoleTextAttribute( col,0x0000 );
@@ -32,7 +29,11 @@ using namespace std;
 #define PLUM SetConsoleTextAttribute( col,0x000d );
 #define YELLOW SetConsoleTextAttribute( col,0x000e );
 //////////////////////////////////////////////////////
+
+#define WIDTH 30
+#define HEIGHT 30
 #define _CRT_SECURE_NO_WARNINGS
+
 
 enum STARTTYPE
 {

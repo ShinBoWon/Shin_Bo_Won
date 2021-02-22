@@ -1,22 +1,23 @@
 #pragma once
 #include "Rank.h"
 #include "Interface.h"
-#include "MapDraw.h"
+#include "WardManager.h"
 
 enum MENU
 {
 	MENU_GAME_START = 1,
 	MENU_RANK,
-	MENU_EXIT
+	MENU_GAME_EIXT
 };
 class Play
 {
 private:
 	MapDraw m_Draw;
-public:
-	void Game_Playing();
-	void Menu();
+	Interface m_Interface;
 
+public:
+	
+	void Game_Main();
 	Play();
 	~Play();
 };
