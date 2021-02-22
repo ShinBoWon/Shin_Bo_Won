@@ -11,6 +11,9 @@
 #include <list>
 using namespace std;
 
+#define WIDTH 35
+#define HEIGHT 65
+
 //////////////////////////////////////////////////////
 #define col GetStdHandle(STD_OUTPUT_HANDLE) 
 #define BLACK SetConsoleTextAttribute( col,0x0000 );

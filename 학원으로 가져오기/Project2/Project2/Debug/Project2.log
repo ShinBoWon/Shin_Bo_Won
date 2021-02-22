@@ -1,3 +1,22 @@
-﻿  소스.cpp
-c:\users\a07\desktop\새 폴더 (2)\project2\project2\소스.cpp(54): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
-  Project2.vcxproj -> C:\Users\A07\Desktop\새 폴더 (2)\Project2\Debug\Project2.exe
+﻿  MapDraw.cpp
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\MapDraw.h(29,17): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\MapDraw.h(29,20): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\MapDraw.cpp(26,8): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\MapDraw.cpp(92,1): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  Play.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\conio.h(453): message : 'getch' 선언을 참조하십시오.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\MapDraw.h(29,17): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\MapDraw.h(29,20): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\Play.cpp(5,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\Play.cpp(8,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : 'sprintf' 선언을 참조하십시오.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\Play.cpp(14,63): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\Play.cpp(15,50): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\Play.cpp(16,44): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  소스.cpp
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\Play.cpp(17,44): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\MapDraw.h(29,17): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\MapDraw.h(29,20): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  코드를 생성하고 있습니다...
+D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Project2\소스.cpp(4,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+  Project2.vcxproj -> D:\공부\GitHub\Shin_Bo_Won\학원으로 가져오기\Project2\Debug\Project2.exe
