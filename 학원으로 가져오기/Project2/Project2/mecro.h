@@ -33,10 +33,3 @@ using namespace std;
 #define WIDTH 30
 #define HEIGHT 30
 #define _CRT_SECURE_NO_WARNINGS
-
-
-enum STARTTYPE
-{
-	STARTTYPE_NEWSTART,
-	STARTTYPE_LOADSTART
-};
