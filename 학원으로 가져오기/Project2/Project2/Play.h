@@ -16,7 +16,8 @@ private:
 	Interface m_Interface;
 
 public:
-	
+	void Game_Play();
+	void Main_Menu();
 	void Game_Main();
 	Play();
 	~Play();
