@@ -1,0 +1,205 @@
+//C++ STL -> container -> 스택, 큐 ,Linked list(List, Vector) , tree
+#include <stdio.h>
+#include <stack>
+#include <queue>
+#include <list>
+// LinkedList
+// 장점
+// 장점 : 특정 위치의 데이터에 조작이 편하다.(삭제, 수정 , 추가)
+// 단점 : 마지막 위치에 데이터를 추가하는데에 연산이 오래 걸린다.
+//사용 시점 : 데이터의 입력 순서가 주요하지 않으며 각각의 개별정보를 사용할 때
+
+#include <vector>
+//Array(배열) List
+// 장점 : 특정위치의 데이터에 접근이 빠르다.(주소연산)
+// 장점 2 : 마지막 위치에 데이터를 추가하는데 용이하다.
+// 단점 : 특정위치의 데이터에 조작이 불편하다.(삭제,수정, 추가)
+//사용 시점 : 입력 순서가 중요하여 순서에 의해 개별정보를 사용할 때
+
+//void main() 스택
+//{
+//	std::stack<int> iStack;
+//	for (int i = 1; i <= 10; i++)
+//	{
+//		iStack.push(i);
+//		printf("Top : %d\n", iStack.top());
+//	}
+//
+//	while (iStack.empty() == false) // empty == stack 이 비어 있는지 아닌지 확인 하는 코드
+//	{
+//		printf("Top : %d\n", iStack.top());
+//		iStack.pop();
+//	}
+//}
+//
+//void main()큐
+//{
+//	
+//
+//	std::queue<int> iQueue;
+//	
+//	for (int i = 1; i <= 10; i++)
+//	{
+//		iQueue.push(i);
+//		printf("front : %d \t rear : %d\n", iQueue.front(), iQueue.back());
+//	}
+//	//iQueue.size() -> 형제 자료 구조가 들고 있는 개 수 ...
+//	
+//	while (iQueue.empty() == false)
+//	{
+//		printf("front : %d \t rear : %d\n", iQueue.front(), iQueue.back());
+//		iQueue.pop();
+//	}
+//}
+//void ShowList(std::list<int> iList)
+//{ // iterator 지시자std::list<int>::iterator -> 원래 자료형
+//	// auto 자동으로 자료형을 지정 해줌 -> 어떤 자료형을 가지고 있는지 써야함
+//	printf("front : %d \t rear : %d \n\n", iList.front(), iList.back());
+//
+//	for (auto iter = iList.begin(); iter != iList.end(); iter++) // end 가 마지막 다음 
+//		printf(" %d", *iter);
+//	printf("\n");
+//
+//	
+//}
+//std::list<int> Insert(std::list<int> iList,int Data, int AddData)
+//{
+//	for (auto iter = iList.begin(); iter != iList.end(); iter++)
+//	{
+//		if (*iter == Data)
+//		{
+//			iList.insert(iter, AddData);
+//			return iList;
+//		}		 
+//	}
+//	return iList;
+//}
+//
+//std::list<int> Delete(std::list<int> iList, int Data)
+//{
+//	for (auto iter = iList.begin(); iter != iList.end(); iter++)
+//	{
+//		if (*iter == Data)
+//		{
+//			iter = iList.erase(iter);
+//			break;
+//		}
+//	}
+//	return iList;
+//}
+//
+//
+//void main()
+//{
+//	std::list<int> iList;
+//	for (int i = 1; i <= 10; i++)
+//		iList.push_back(i);
+//
+//	ShowList(iList);// 출력 함수
+//
+//	//삽입
+//
+//	printf("\n");
+//	iList.push_front(11); // 맨 앞에 있는 정보 추가
+//	ShowList(iList);
+//
+//	printf("\n");
+//	iList.pop_back(); //마지막 정보 삭제
+//	ShowList(iList);
+//
+//	printf("\n");
+//	iList.pop_front(); // 맨 앞에 있는 정보 삭제
+//	ShowList(iList);
+//
+//	iList = Insert(iList, 6, 10);
+//	ShowList(iList);
+//
+//	iList = Delete(iList, 5);
+//	ShowList(iList);
+//
+//	iList.clear(); // 전체 삭제
+//	iList.empty(); // 비어 있는지 확인
+//	iList.size();// 들고 있는 갯수 
+//}
+
+void ShowVector_1(std::vector<int> iVector)// 벡터가 출력하는 방식은 여러가지 중 첫 번째
+{
+	for (int i = 0; i < iVector.size(); i++)
+		printf("%d ", iVector[i]);
+	printf("\n");
+}
+
+void ShowVector_2(std::vector<int> iVector)// 벡터가 출력하는 방식은 여러가지 중 두 번째
+{
+	for (int i = 0; i < iVector.size(); i++)
+		printf("%d ", iVector.at(i));
+	printf("\n");
+}
+
+void ShowVector_3(std::vector<int> iVector)// 벡터가 출력하는 방식은 여러가지 중 세 번째
+{ // 주로 제일 많이 사용 됨
+	for (auto iter = iVector.begin(); iter != iVector.end(); iter++)
+		printf("%d ", *iter);
+	printf("\n");
+}
+std::vector<int> insert(std::vector<int> iVector, int Data, int addData)
+{
+	for (auto iter = iVector.begin(); iter != iVector.end(); iter++)
+	{
+		if (*iter == Data)
+		{
+			iVector.insert(iter, addData); // Data 수 앞에 addData 입력.
+			break;
+		}
+	}
+	
+	return iVector;
+}
+
+std::vector<int> Delete(std::vector<int> iVector, int Data)
+{
+	for (auto iter = iVector.begin(); iter != iVector.end(); iter++)
+	{
+		if (*iter == Data)
+		{
+			iVector.erase(iter); //삭제 
+			break;
+		}
+	}
+
+	return iVector;
+}
+
+void main() 
+{
+	std::vector<int> iVector;
+
+	for (int i = 1; i <= 10; i++)
+		iVector.push_back(i);
+
+	ShowVector_1(iVector);
+
+	ShowVector_2(iVector);
+
+	ShowVector_3(iVector);
+
+	iVector.back();// 마지막 정보
+	iVector.front();//처음 정보
+	//iVector.clear();// 전체 삭제
+	iVector.empty(); // 비어있는지 확인
+	iVector.pop_back();//마지막 정보삭제
+	
+	ShowVector_3(iVector);
+
+	//Vector 는 Pop_front() Push_Fornt는 사용하기 어렵다.
+
+	iVector.size(); //원소의 갯 수 
+	
+	iVector = insert(iVector, 5, 11);
+
+	ShowVector_3(iVector);
+	
+	iVector = Delete(iVector, 5);
+
+	ShowVector_3(iVector);
+}

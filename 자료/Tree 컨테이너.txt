@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+#include <map> // .h가 안들어가면 C++ 문법임.
+
+struct Book
+{
+	char m_szName[256];
+	char m_szAuthor[256];
+	int m_iPrice;
+};
+
+Book CreatBookInfo()
+{
+	Book book;
+	printf("책 이름 입력 :");
+	scanf("%s", book.m_szName);
+	printf("책 저자 입력 :");
+	scanf("%s", book.m_szAuthor);
+	printf("책 가격 입력 :");
+	scanf("%d", &book.m_iPrice);
+	return book;
+}
+void ShowBook(std::map<int, Book>::iterator book)//book에 저장된 데이터 값들 출력.
+{
+	printf("==========================\n");
+	printf("BookKey : %d\n", book->first);
+	printf("책 이름 : %s\t 저자 이름 :  %s\t 책 가격 : %d\n", book->second.m_szName, book->second.m_szAuthor, book->second.m_iPrice);
+	printf("==========================\n");
+}
+
+void showmap(std::map<int, Book> mapBookList)
+{
+	for (std::map<int, Book>::iterator iter = mapBookList.begin(); iter != mapBookList.end(); iter++) // iter 지시자 == 노드들의 주소 . 
+	{ // begin시작 
+		ShowBook(iter);
+	}
+}
+
+std::map<int, Book> insert(std::map<int, Book> mapBookList, int num)
+{
+	mapBookList[num] = CreatBookInfo();
+	//mapBookList.insert(std::make_pair(num, CreatBookInfo())); // 1번째가 key값 2번재가 value 
+	return mapBookList;
+	
+	// insert make_pair 가 위에 mapBookList[num]과 비슷함.
+}
+
+void main()
+{
+	int number = 10001;
+	std::map<int, Book> mapBookList;//첫번재가 key값 2번재가 보관할 정보
+	for (int i = 0 ;i < 3; i++)
+		mapBookList = insert(mapBookList, number++);
+
+	showmap(mapBookList);
+
+	mapBookList[10001] = CreatBookInfo();//이미 만들어진 key값에 또다시 하면 덮어 쓰기 즉 변경이 된다.
+
+	showmap(mapBookList);
+
+	//mapBookList.at(10001) == mapBookList[10001] // at() 위 에 []와 같다
+	
+	//mapBookList.clear(); 저체 삭제
+	//mapBookList.count(); 원소 갯수 확인
+	//mapBookList.empty(); 비어 있는지 확인
+	//std::map<int,Book>::iterator iter = mapBookList.find(10002); // key값을 빼기 다만 iterator로 빼기 
+	// find -> key기준으로 해당 노드의 iterator 반환
+
+	mapBookList.erase(10001); // kyer값으로 삭제
+	mapBookList.erase(mapBookList.find(10002)); // iterator로 삭제 가능.
+	
+	showmap(mapBookList);
+}

@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<map>
+
+
+struct Book
+{
+	char	m_szName[256];
+	char	m_szAuthor[256];
+	int		m_iPrice;
+};
+
+Book CreateBookInfo()
+{
+	Book book;
+	printf("책 이름 입력 : ");
+	scanf("%s", book.m_szName);
+	printf("저자 이름 입력 : ");
+	scanf("%s", book.m_szAuthor);
+	printf("책 가격 입력 : ");
+	scanf("%d", &book.m_iPrice);
+	return book;
+}
+
+std::map<int, Book> insert(std::map<int, Book> mapBookList,int Num)
+{
+	mapBookList[Num] = CreateBookInfo();
+	mapBookList.insert(std::make_pair(Num, CreateBookInfo()));
+	return mapBookList;
+}
+
+void main()
+{
+	int Number = 10001;
+	std::map<int, Book> mapBookList;
+	for(int i = 0 ; i < 3 ; i++)
+		mapBookList = insert(mapBookList, Number++);
+}
