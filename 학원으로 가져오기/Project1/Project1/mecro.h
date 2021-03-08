@@ -12,6 +12,8 @@
 
 using namespace std;
 
+#define ONE_SEC 1000
+
 //////////////////////////////////////////////////////
 #define col GetStdHandle(STD_OUTPUT_HANDLE) 
 #define BLACK SetConsoleTextAttribute( col,0x0000 );

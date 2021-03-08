@@ -20,6 +20,7 @@ void WordManager::Get_List()
 		m_vecWord.push_back(Spell);		
 	}
 	m_iWord_Count = 0;
+	m_iDifficulty = 1;
 }
 
 void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 단어 들이랑 겹치지 않고 하기
@@ -62,7 +63,16 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 		}
 	}
 	m_iWord_Count++;
-	
+}
+
+bool WordManager::Eating_Word(string Word)
+{
+	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
+	{
+		if ((*iter)->Word_Out() == Word)
+			return true;
+	}
+	return false;
 }
 
 void WordManager::Word_Move_Down()

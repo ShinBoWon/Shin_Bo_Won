@@ -11,8 +11,9 @@ Interface::Interface()
 
 void Interface::Input_Box()
 {
-	m_Draw.BoxDraw(WIDTH, HEIGHT * 0.7f, 20, 7);	 // Skip또는 Name 입력 박스
-	m_Draw.DrawMidText("Skip : s", WIDTH, HEIGHT * 0.7f + 3);
+	BLUE
+	m_Draw.BoxDraw(WIDTH, HEIGHT * 0.7f, 20, 7);	 // Skip또는 Name 입력 박스 + 단어 입력 박스
+	ORIGINAL
 }
 
 void Interface::Show_Reading()
@@ -21,8 +22,11 @@ void Interface::Show_Reading()
 	string str[READ];
 	char Skip = NULL;
 	int i = 0, Read_Time = clock(), Contrast_Time;
-	load.open("베네치아_스토리.txt");
+
 	Input_Box();
+	m_Draw.DrawMidText("Skip : s", WIDTH, HEIGHT * 0.7f + 3);
+
+	load.open("베네치아_스토리.txt");	
 
 	while (!load.eof() && Skip != SKIP)
 	{
@@ -67,7 +71,7 @@ void Interface::Show_Reading()
 	}
 
 	for (int j = 0; j < READ; j++)
-		m_Draw.DrawMidText("                                                           ", WIDTH, HEIGHT * 0.2f + j);
+		m_Draw.DrawMidText("                                              ", WIDTH, HEIGHT * 0.2f + j);
 }
 
 void Interface::Make_Box()
@@ -91,13 +95,12 @@ void Interface::Show_Information(int Life, int Score, string Name)
 string Interface::Player_Name()
 {
 	char Name_Ward;
-	string Name;	  // string 이 아닌 Char[] 로 해야 할거 같음.
-	int Name_Length = 0;
+	string Name;  // string 이 아닌 Char[] 로 해야 할거 같음
 	BLUE
 		m_Draw.DrawMidText("                   ", WIDTH, HEIGHT* 0.7f + 3);
 	m_Draw.DrawMidText("이름을 입력 하세요", WIDTH, HEIGHT * 0.6f);
 	m_Draw.DrawMidText("", WIDTH, HEIGHT * 0.7f + 3);
-	while (Name_Length < 10)
+	while (Name.length() < 10)
 	{
 		Name_Ward = getch();
 		Name += Name_Ward;
@@ -105,9 +108,8 @@ string Interface::Player_Name()
 		m_Draw.DrawMidText(Name, WIDTH, HEIGHT * 0.7f + 3);
 		if (Name_Ward == 13)
 			break;
-		Name_Length++;
 	}
-	if (Name_Length == 10)
+	if (Name.length() == 10)
 	{
 		m_Draw.DrawMidText("10글자 입력 초과!!", WIDTH, HEIGHT * 0.6f + 1);
 		char skip = getch();

@@ -35,8 +35,6 @@ void MapDraw::TextDraw(string str, int x, int y)
 	cout << str;
 }
 
-
-
 void MapDraw::BoxErase(int Width, int Height)
 {
 	for (int y = 1; y < Height - 1; y++)
