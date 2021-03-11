@@ -1,4 +1,0 @@
-﻿  WordManager.cpp
-C:\Users\A10\Desktop\새 폴더\새 폴더\Project1\Project1\MapDraw.h(29,17): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\A10\Desktop\새 폴더\새 폴더\Project1\Project1\MapDraw.h(29,20): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-  Project1.vcxproj -> C:\Users\A10\Desktop\새 폴더\새 폴더\Project1\Debug\Project1.exe
