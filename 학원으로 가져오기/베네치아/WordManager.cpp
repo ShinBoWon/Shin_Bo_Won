@@ -84,13 +84,12 @@ bool WordManager::Eating_Word(string Word)
 				m_listVirus.erase(iter);
 				Erase_Check = false;
 			}
+			else
+				m_listVirus.clear();
 
 			break;
 		}
-	}
-	if (m_listVirus.size() == 1 && Erase_Check)
-		m_listVirus.clear();
-
+	}		
 	return Check;
 }
 
