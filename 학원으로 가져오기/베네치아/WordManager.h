@@ -12,12 +12,12 @@ private:
 
 public:
 
-	bool Eating_Word(string Word);
+	bool Chekcing_Word(string Word);
 	void Get_List();
 	void Get_Attack_Word();
 	bool Hit_Damage();
 
-	void Erase_Word();	
+	void Word_Drop(int Time);
 
 	void Delete_Virus();
 	void Delete_List();

@@ -24,7 +24,9 @@ public:
 
 	void Input_Box();
 	
-	void Playing_Information(int Life, int Score);
+	void Player_Score(int Score);
+
+	void Player_Life(int Life);
 
 	
 

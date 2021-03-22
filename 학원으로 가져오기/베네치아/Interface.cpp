@@ -87,14 +87,19 @@ void Interface::Show_Reading()
 		m_Draw.DrawMidText("                                              ", WIDTH, HEIGHT * 0.2f + j);
 }
 
-void Interface::Playing_Information(int Life, int Score)
+void Interface::Player_Life(int Life)
 {
 	m_Draw.DrawMidText("                                        ", 0, HEIGHT + 2);
-	m_Draw.DrawMidText("                      ", WIDTH, HEIGHT + 2);
 
 	m_Draw.DrawMidText("Life : ", 0, HEIGHT + 2);
 	for (int i = 0; i < Life; i++)
 		cout << "¢¾";
+}
+
+void Interface::Player_Score(int Score)
+{
+	m_Draw.DrawMidText("                      ", WIDTH, HEIGHT + 2);
+	
 	m_Draw.DrawMidText("Score : ", WIDTH, HEIGHT + 2);
 	cout << Score;
 }

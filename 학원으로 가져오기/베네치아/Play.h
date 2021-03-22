@@ -34,15 +34,12 @@ private:
 public:
 
 	string Get_Name();	
-	
+	void Word_Check(int &Time, int Fail_Time, string &enter_word);
+	void Enter_Word(string & enter_word , bool & Enter);
+
 	void Main_Play();
 	void Game_Play();
 	void Save_Game();
-
-	void Input_Result(string &enter_word, bool& Word_Enter_Penalty);
-	bool Word_Input(string &enter_word);
-
-	void Penalty_Check();
 
 	void Stage_up();
 	void Stage_Box();
@@ -50,6 +47,8 @@ public:
 	void Main();
 	void Input_Data(string Name);
 	void Delete_Data();
+
+
 	Play();
 	~Play();
 };

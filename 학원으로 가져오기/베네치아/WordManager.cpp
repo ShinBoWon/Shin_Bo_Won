@@ -16,10 +16,8 @@ void WordManager::Get_List()
 		Word *Spell;
 		Spell = new Word;
 		load >> Spelling;
-		Spell->Get_Word(Spelling);
 		m_vecWord.push_back(Spell);		
 	}
-	m_iWord_Count = 0;
 	m_iDifficulty = 1;
 }
 
@@ -27,7 +25,7 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 {
 	int Rand_Word, x_Location,Limit_x = WIDTH * 2 - 20;
 	string Get_Word;
-	for (int i = 0; i <= m_iWord_Count;i++)
+	for (int i = 0; i <= m_vecWord.size();i++)
 	{
 		Rand_Word = rand() % m_vecWord.size();
 		Get_Word = m_vecWord[Rand_Word]->Word_Out();
@@ -42,7 +40,6 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 					x_Location = rand() % Limit_x + 10;
 					Virus->Attack_Location(x_Location, m_vecWord[Rand_Word]->Word_Out());
 					m_listVirus.push_back(Virus);
-					m_iWord_Count++;
 					return;
 				}
 				else
@@ -59,53 +56,67 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 			x_Location = rand() % Limit_x + 10;
 			Virus->Attack_Location(x_Location, m_vecWord[Rand_Word]->Word_Out());
 			m_listVirus.push_back(Virus);
-			m_iWord_Count++;
 			return;
 
 		}
 	}
 }
 
-bool WordManager::Eating_Word(string Word)
+bool WordManager::Chekcing_Word(string Word)
 {
-	bool Check = false , Erase_Check = true;
-
  	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
 	{
 		if ((*iter)->Word_Out() == Word)
 		{
-			Check = true;
-			(*iter)->Erase_Point();
-			delete* iter;
-			m_iWord_Count--;
-
-			if (m_listVirus.size() > 1 && Erase_Check)
+			(*iter)->Die();
+			switch ((*iter)->Item_Out())
 			{
-				m_listVirus.erase(iter);
-				Erase_Check = false;
+			case ITEM_SPEED_DWON:
+				
+				break;
+			case ITEM_SPEED_UP:
+				
+				break;
+			case ITEM_STOP:
+				
+				break;
+			case ITEM_CLEAR:
+				Delete_Virus();
+				break;
+			case ITEM_BLACK:
+				
+				break;
+			case ITEM_DONT:
+				
+				break;
 			}
-			else
-				m_listVirus.clear();
-
-			break;
+			delete (*iter);
+			m_listVirus.erase(iter);
+			
+			return true;
 		}
-	}		
-	return Check;
+	}
+
+	return false;
+}
+
+void WordManager::Word_Drop(int Time)
+{
 }
 
 bool WordManager::Hit_Damage()
 {
-	bool Check = true;
 	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
 	{
-		if (!(*iter)->Drop())
+		if ((*iter)->Drop())
 		{
-			Check = false;
+			(*iter)->Die();
 			delete *iter;
-			iter = m_listVirus.erase(iter);
+			m_listVirus.erase(iter);
+			return false;
 		}
 	}
-	return Check;
+	return true;
 }
 
 void WordManager::Delete_Virus()
