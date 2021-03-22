@@ -34,8 +34,8 @@ private:
 public:
 
 	string Get_Name();	
-	void Word_Check(int &Time, int Fail_Time, string &enter_word);
 	void Enter_Word(string & enter_word , bool & Enter);
+	void Get_Score();
 
 	void Main_Play();
 	void Game_Play();

@@ -13,12 +13,22 @@ void WordManager::Get_List()
 	load >> Word_Count;
 	for (int i = 0; i < Word_Count; i++)
 	{
+		
 		Word *Spell;
 		Spell = new Word;
-		load >> Spelling;
+		load >> Spelling; // 좌표 하고 넣기 정도?.
+		(*Spell).Get_Word(Spelling);
 		m_vecWord.push_back(Spell);		
 	}
-	m_iDifficulty = 1;
+
+	m_iSpeed = 0;
+	m_Item_Check.Black = false;
+	m_Item_Check.Speed_Up = false;
+	m_Item_Check.Speed_Down = false;
+	m_Item_Check.Stop = false;
+	m_Timer.Stop_Check = true;
+	m_Timer.Black_Check = true;
+
 }
 
 void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 단어 들이랑 겹치지 않고 하기
@@ -38,7 +48,7 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 					Word* Virus;
 					Virus = new Word;
 					x_Location = rand() % Limit_x + 10;
-					Virus->Attack_Location(x_Location, m_vecWord[Rand_Word]->Word_Out());
+					Virus->Pick_Up(x_Location, m_vecWord[Rand_Word]->Word_Out());
 					m_listVirus.push_back(Virus);
 					return;
 				}
@@ -54,7 +64,7 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 			Word* Virus;
 			Virus = new Word;
 			x_Location = rand() % Limit_x + 10;
-			Virus->Attack_Location(x_Location, m_vecWord[Rand_Word]->Word_Out());
+			Virus->Pick_Up(x_Location, m_vecWord[Rand_Word]->Word_Out());
 			m_listVirus.push_back(Virus);
 			return;
 
@@ -64,6 +74,7 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 
 bool WordManager::Chekcing_Word(string Word)
 {
+	bool Check = false;
  	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
 	{
 		if ((*iter)->Word_Out() == Word)
@@ -71,52 +82,126 @@ bool WordManager::Chekcing_Word(string Word)
 			(*iter)->Die();
 			switch ((*iter)->Item_Out())
 			{
-			case ITEM_SPEED_DWON:
-				
+			case ITEM_SPEED_DOWN: // 시간 관리.
+				m_Item_Check.Speed_Down = true;
+				m_Now_Item = ITEM_SPEED_DOWN;
+				m_iSpeed -= 300;
 				break;
 			case ITEM_SPEED_UP:
-				
+				m_Item_Check.Speed_Up = true;
+				m_Now_Item = ITEM_SPEED_UP;
+				m_iSpeed += 300;
 				break;
 			case ITEM_STOP:
-				
+				m_Item_Check.Stop = true;
+				m_Now_Item = ITEM_STOP;
+				m_Timer.Stop_Check = false;
 				break;
 			case ITEM_CLEAR:
 				Delete_Virus();
 				break;
 			case ITEM_BLACK:
-				
-				break;
-			case ITEM_DONT:
-				
+				m_Item_Check.Black = true;
+				m_Now_Item = ITEM_BLACK;
+				m_Timer.Black_Check = false;
 				break;
 			}
 			delete (*iter);
 			m_listVirus.erase(iter);
-			
-			return true;
+			Check = true;
+			break;
+
 		}
 	}
-
-	return false;
+	Item_Aability();
+	return Check;
 }
 
-void WordManager::Word_Drop(int Time)
+void WordManager::Item_Aability()
 {
+	switch (m_Now_Item)
+	{
+	case ITEM_SPEED_DOWN: // 시간 관리.
+		m_Timer.Speed_Down_Start = clock();
+		if (!m_Item_Check.Speed_Down)
+			m_Timer.Speed_Down_Stop = clock();
+
+		if (m_Timer.Speed_Down_Stop - m_Timer.Speed_Down_Start <= ONE_SEC * 3)
+			m_iSpeed = 0;
+		break;
+
+	case ITEM_SPEED_UP:
+		m_Timer.Speed_Up_Start = clock();
+		if (!m_Item_Check.Speed_Down)
+			m_Timer.Speed_Up_Stop = clock();
+
+		if (m_Timer.Speed_Up_Stop - m_Timer.Speed_Up_Start <= ONE_SEC * 3)
+			m_iSpeed = 0;
+		break;
+
+	case ITEM_STOP:
+		m_Timer.Stop_Start = clock();
+
+		if (!m_Item_Check.Speed_Down)
+			m_Timer.Stop_Stop = clock();
+
+		if (m_Timer.Stop_Stop - m_Timer.Stop_Start <= ONE_SEC * 3)
+			m_Timer.Stop_Check = true;
+		break;
+
+	case ITEM_BLACK:
+		m_Timer.Black_Start = clock();
+
+		if (!m_Item_Check.Speed_Down)
+			m_Timer.Black_Stop = clock();
+
+		if (m_Timer.Black_Stop - m_Timer.Black_Start <= ONE_SEC * 3)
+			m_Timer.Black_Check = true;
+		break;
+
+	default:
+		break;
+	}
+}
+
+void WordManager::Drop_Time_Control(int Stage, int &Life, int &Start_Time, int &Sec_Time) // 아이템 시간 관리
+{
+	Sec_Time = clock();
+	if (Sec_Time - Start_Time >= ONE_SEC + m_iSpeed && m_Timer.Stop_Check)  // 1초에 한번씩 작동
+	{
+
+		if (rand() % 3 == 0) // 3/1 확률로 단어가 생성됨... -> 확률 조절 가능하게.Stage 에 따라 나오는 단어 횟수가 쪼오오오오 금씩 늘어나게
+			Get_Attack_Word();
+
+		if (!Hit_Damage())
+			Life--;
+
+		Word_Drop();
+		Start_Time = Sec_Time;
+	}
+}
+
+void WordManager::Word_Drop()
+{
+	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
+		(*iter)->Draw_Word(m_Timer.Black_Check);
 }
 
 bool WordManager::Hit_Damage()
 {
+	bool Check = true;
 	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
 	{
-		if ((*iter)->Drop())
+		if (!(*iter)->Drop())
 		{
 			(*iter)->Die();
 			delete *iter;
 			m_listVirus.erase(iter);
-			return false;
+			Check = false;
+			break;
 		}
 	}
-	return true;
+	return Check;
 }
 
 void WordManager::Delete_Virus()

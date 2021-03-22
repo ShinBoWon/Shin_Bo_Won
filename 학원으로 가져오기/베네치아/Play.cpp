@@ -73,9 +73,15 @@ void Play::Stage_up()
 	m_Interface.Erase_Input_Box();
 }
 
+void Play::Get_Score()
+{
+	int Plus_Score = rand() % 100 + 70; // 70 점에서 169 점 사이의 점수 획듯
+	m_Player->Score += Plus_Score;
+}
+
 void Play::Game_Play()
 {
-	int Timer, Word_Make, SecTime = clock(), Fail_Time = clock();
+	int  Timer, Main_Time = clock();
 	string Input_Word = "";
 	bool Enter = false;
 	m_Interface.Input_Box();
@@ -86,44 +92,28 @@ void Play::Game_Play()
 
 		if (kbhit() && !Enter) // 패널티 넣기
 			Enter_Word(Input_Word, Enter);
-		
+
 		if (Enter)
 		{
-			if (!m_Manager.Chekcing_Word(Input_Word))
+			if (!m_Manager.Chekcing_Word(Input_Word)) // 틀렸을때 패널티
 			{
 				RED
-					m_Draw.DrawMidText("                   ", WIDTH, HEIGHT * 0.7f + 3);
+					m_Draw.DrawMidText("               ", WIDTH, HEIGHT * 0.7f + 3);
 				Input_Word = " Fail Compare !! "; 
 				m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
+				ORIGINAL
 			}
 			else
 			{
-				int Plus_Score = rand() % 100 + 70; // 70 점에서 169 점 사이의 점수 획듯
-				m_Player->Score += Plus_Score;
+				Get_Score();
 				Input_Word = "";
-				
 			}
 			Enter = false;
 		} // 엔터 값 까지.
 
 
-		if (Timer - SecTime >= ONE_SEC ) // 1초 
-		{
-			if (Word_Make = rand() % 3 == 0) // 확률 적으로 단어가 생김
-				m_Manager.Get_Attack_Word();
+		m_Manager.Drop_Time_Control(m_Player->Stage,m_Player->Life, Main_Time,Timer);
 
-			if (!m_Manager.Hit_Damage()) // 단어 떨어지는 시간 관리를 다시 ..
-			{
-				m_Player->Life--;
-				m_Interface.Player_Life(m_Player->Life);
-			}
-			
-			m_Interface.Input_Box();
-			BLUE
-			m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
-			ORIGINAL
-			SecTime = Timer; // 시간 관리
-		}
 	}
 }
 
@@ -136,9 +126,7 @@ void Play::Enter_Word(string & enter_word , bool  & Enter)
 	{
 		word = getch();
 		if (word == 13 && enter_word.length() >= 1)
-		{
 			Enter = true;
-		}
 		else if (word == 8 && enter_word.length() > 0)
 			enter_word.pop_back();
 		else if (word >= 'a' && word <= 'z')
