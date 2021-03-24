@@ -180,11 +180,8 @@ bool WordManager::Drop_Time_Control(int Stage, int &Life, int &Start_Time, int &
 		{
 			Life--;
 			Life_Check = true;
-			
 		}
 
-		Word_Drop();
-		
 		Start_Time = Sec_Time;
 		return true;
 	}
