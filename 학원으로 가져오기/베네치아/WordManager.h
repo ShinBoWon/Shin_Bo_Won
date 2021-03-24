@@ -46,7 +46,7 @@ public:
 	void Item_Aability();
 
 	void Word_Drop();
-	void Drop_Time_Control(int Stage, int & Life,int &Main_Time, int &Sec_Time);
+	bool Drop_Time_Control(int Stage, int & Life,int &Main_Time, int &Sec_Time, bool &Life_Check );
 
 	void Delete_Virus();
 	void Delete_List();

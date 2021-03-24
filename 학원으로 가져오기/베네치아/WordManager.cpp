@@ -34,11 +34,9 @@ void WordManager::Get_List()
 void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 단어 들이랑 겹치지 않고 하기
 {
 	int Rand_Word, x_Location,Limit_x = WIDTH * 2 - 20;
-	string Get_Word;
 	for (int i = 0; i <= m_vecWord.size();i++)
 	{
 		Rand_Word = rand() % m_vecWord.size();
-		Get_Word = m_vecWord[Rand_Word]->Word_Out();
 		if (m_listVirus.size() != 0)
 		{
 			for (auto iter = m_listVirus.begin(); iter != m_listVirus.end();iter++)
@@ -67,14 +65,13 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 			Virus->Pick_Up(x_Location, m_vecWord[Rand_Word]->Word_Out());
 			m_listVirus.push_back(Virus);
 			return;
-
 		}
 	}
 }
 
 bool WordManager::Chekcing_Word(string Word)
 {
-	bool Check = false;
+	bool Check = false, Clear_Check = true;
  	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
 	{
 		if ((*iter)->Word_Out() == Word)
@@ -99,6 +96,7 @@ bool WordManager::Chekcing_Word(string Word)
 				break;
 			case ITEM_CLEAR:
 				Delete_Virus();
+				Clear_Check = false;
 				break;
 			case ITEM_BLACK:
 				m_Item_Check.Black = true;
@@ -106,8 +104,13 @@ bool WordManager::Chekcing_Word(string Word)
 				m_Timer.Black_Check = false;
 				break;
 			}
-			delete (*iter);
-			m_listVirus.erase(iter);
+
+			if (Clear_Check)
+			{
+				delete (*iter);
+				m_listVirus.erase(iter);
+			}
+
 			Check = true;
 			break;
 
@@ -164,21 +167,28 @@ void WordManager::Item_Aability()
 	}
 }
 
-void WordManager::Drop_Time_Control(int Stage, int &Life, int &Start_Time, int &Sec_Time) // 아이템 시간 관리
+bool WordManager::Drop_Time_Control(int Stage, int &Life, int &Start_Time, int &Sec_Time, bool &Life_Check) // 아이템 시간 관리
 {
 	Sec_Time = clock();
-	if (Sec_Time - Start_Time >= ONE_SEC + m_iSpeed && m_Timer.Stop_Check)  // 1초에 한번씩 작동
+	if ( (Sec_Time - Start_Time >= ONE_SEC + m_iSpeed )  && m_Timer.Stop_Check)  // 1초에 한번씩 작동
 	{
 
 		if (rand() % 3 == 0) // 3/1 확률로 단어가 생성됨... -> 확률 조절 가능하게.Stage 에 따라 나오는 단어 횟수가 쪼오오오오 금씩 늘어나게
 			Get_Attack_Word();
 
 		if (!Hit_Damage())
+		{
 			Life--;
+			Life_Check = true;
+			
+		}
 
 		Word_Drop();
+		
 		Start_Time = Sec_Time;
+		return true;
 	}
+	return false;
 }
 
 void WordManager::Word_Drop()
@@ -189,7 +199,6 @@ void WordManager::Word_Drop()
 
 bool WordManager::Hit_Damage()
 {
-	bool Check = true;
 	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
 	{
 		if (!(*iter)->Drop())
@@ -197,11 +206,10 @@ bool WordManager::Hit_Damage()
 			(*iter)->Die();
 			delete *iter;
 			m_listVirus.erase(iter);
-			Check = false;
-			break;
+			return false;
 		}
 	}
-	return Check;
+	return true;
 }
 
 void WordManager::Delete_Virus()

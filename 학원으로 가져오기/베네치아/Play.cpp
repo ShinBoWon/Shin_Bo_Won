@@ -77,13 +77,14 @@ void Play::Get_Score()
 {
 	int Plus_Score = rand() % 100 + 70; // 70 점에서 169 점 사이의 점수 획듯
 	m_Player->Score += Plus_Score;
+	m_Interface.Player_Score(m_Player->Score);
 }
 
 void Play::Game_Play()
 {
-	int  Timer, Main_Time = clock();
+	int Height_Location, Timer, Main_Time = clock();
 	string Input_Word = "";
-	bool Enter = false;
+	bool Enter = false, Life_Check = false;
 	m_Interface.Input_Box();
 
 	while (m_Player->Life != 0 && m_Player->Score <= m_iStage_Socre)
@@ -97,23 +98,34 @@ void Play::Game_Play()
 		{
 			if (!m_Manager.Chekcing_Word(Input_Word)) // 틀렸을때 패널티
 			{
-				RED
-					m_Draw.DrawMidText("               ", WIDTH, HEIGHT * 0.7f + 3);
+				m_Draw.DrawMidText("                       ", WIDTH, HEIGHT * 0.7f + 3);
+				RED					
 				Input_Word = " Fail Compare !! "; 
 				m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
 				ORIGINAL
+					Enter = false; // 이거 수정좀 해야할듯.
 			}
 			else
 			{
+				m_Draw.DrawMidText("                     ", WIDTH, HEIGHT * 0.7f + 3);
 				Get_Score();
 				Input_Word = "";
+				m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
 			}
-			Enter = false;
+			
 		} // 엔터 값 까지.
 
+		if (m_Manager.Drop_Time_Control(m_Player->Stage, m_Player->Life, Main_Time, Timer, Life_Check)) // 조금 수정 해야겟다. Life Check 할때
+		{
+			m_Interface.Input_Box();
+			m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
+		}
 
-		m_Manager.Drop_Time_Control(m_Player->Stage,m_Player->Life, Main_Time,Timer);
-
+		if (Life_Check)
+		{
+			m_Interface.Player_Life(m_Player->Life);
+			Life_Check = false;
+		}
 	}
 }
 

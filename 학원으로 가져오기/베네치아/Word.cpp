@@ -14,8 +14,10 @@ void Word::Pick_Up(int x_Location, string Word)
 	m_strWord = Word;
 	m_iLocation_x = x_Location;
 	m_iLocation_y = 1;
-	if (rand() % 10) // 10 ºÐÀÇ 1 È®·ü 
+	if (rand() % 2 == 0) // 10 ºÐÀÇ 1 È®·ü 
 		Get_Item(rand() % ITEM_COUNT);
+	else 
+		m_Item = ITEM_DONT;
 }
 
 void Word::Die()
@@ -43,9 +45,6 @@ void Word::Get_Item(int Rand)
 		break;
 	case ITEM_BLACK:
 		m_Item = ITEM_BLACK;
-		break;
-	case ITEM_DONT:
-		m_Item = ITEM_DONT;
 		break;
 	}
 }
@@ -75,7 +74,7 @@ void Word::Draw_Word(bool Black)
 bool Word::Drop() // ¶³¾îÁü °ú µ¿½Ã¿¡ ±×·ÁÁü
 {
 	Die();
-	if (m_iLocation_y < HEIGHT - 2)
+	if (m_iLocation_y + 1< HEIGHT - 2)
 	{
 		m_iLocation_y++;
 		return true;
