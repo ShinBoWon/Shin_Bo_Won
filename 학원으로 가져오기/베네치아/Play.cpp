@@ -125,7 +125,7 @@ void Play::Game_Play()
 			Penalty_Time = 0;
 		}
 
-		if (m_Manager.Drop_Time_Control(Main_Time, Timer, Life_Check)) // 조금 수정 해야겟다. Life Check 할때
+		if (m_Manager.Drop_Time_Control(m_Player->Stage,Main_Time, Timer, Life_Check)) // 조금 수정 해야겟다. Life Check 할때
 		{
 			m_Manager.Word_Drop();
 			m_Interface.Input_Box();

@@ -30,24 +30,30 @@ void WordManager::Get_List()
 	m_Timer.Black_Check = true;
 }
 
-void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 단어 들이랑 겹치지 않고 하기
+bool WordManager::Word_Size_Check(int Location_x,int Word_Location,string Word)
 {
-	int Rand_Word, x_Location,Limit_x = WIDTH * 2 - 20;
+	if (Location_x >= Word_Location && Location_x <= Word_Location + Word.size())
+		return false;
+	else
+		return true;
+}
+
+void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 단어 들이랑 겹치지 않고 같은 위치에서 떨어지지 않게 하기.
+{
+	int Rand_Word, x_Location,Limit_x = WIDTH * 2 - 22;
+	bool Same_Check = false;
 	for (int i = 0; i <= m_vecWord.size();i++)
 	{
 		Rand_Word = rand() % m_vecWord.size();
 		if (m_listVirus.size() != 0)
 		{
-			for (auto iter = m_listVirus.begin(); iter != m_listVirus.end();iter++)
-			{
-				if (m_vecWord[i]->Word_Out() != (*iter)->Word_Out())
+			for (auto iter = m_listVirus.begin(); iter != m_listVirus.end();iter++) // 이거 잘 못 됫다.
+			{ // 처음부터 같은게 나올리가 없잖아 !! 씨발 확률이 얼마나 나오겟냐 ㅆ..
+				x_Location = rand() % Limit_x + 10; // 위치 값도 다시 
+				if (m_vecWord[Rand_Word]->Word_Out() != (*iter)->Word_Out() && Word_Size_Check(Rand_Word ,x_Location,(*iter)->Word_Out()))
 				{
-					Word* Virus;
-					Virus = new Word;
-					x_Location = rand() % Limit_x + 10;
-					Virus->Pick_Up(x_Location, m_vecWord[Rand_Word]->Word_Out());
-					m_listVirus.push_back(Virus);
-					return;
+					Same_Check = true;
+					break;
 				}
 				else
 				{
@@ -55,12 +61,21 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 					break;
 				}
 			}
+
+			if (Same_Check)
+			{
+				Word* Virus;
+				Virus = new Word;
+				Virus->Pick_Up(x_Location, m_vecWord[Rand_Word]->Word_Out());
+				m_listVirus.push_back(Virus);
+				return;
+			}
 		}
 		else
 		{
 			Word* Virus;
 			Virus = new Word;
-			x_Location = rand() % Limit_x + 10;
+			x_Location = rand() % Limit_x + 2;
 			Virus->Pick_Up(x_Location, m_vecWord[Rand_Word]->Word_Out());
 			m_listVirus.push_back(Virus);
 			return;
@@ -70,7 +85,7 @@ void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 
 
 bool WordManager::Chekcing_Word(string Word)
 {
-	bool Check = false, Clear_Check = true;
+	bool Check = false, Clear_Check = true , item_Checking = false;
  	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
 	{
 		if ((*iter)->Word_Out() == Word)
@@ -80,20 +95,15 @@ bool WordManager::Chekcing_Word(string Word)
 			{
 			case ITEM_SPEED_DOWN: // 시간 관리.
 				m_Item_Check.Speed_Down = true;
-				m_Now_Item = ITEM_SPEED_DOWN;
-				m_iSpeed -= 300;
-				m_Timer.Speed_Down_Start = clock();
+				item_Checking = true;
 				break;
 			case ITEM_SPEED_UP:
 				m_Item_Check.Speed_Up = true;
-				m_Now_Item = ITEM_SPEED_UP;
-				m_iSpeed += 300;
-				m_Timer.Speed_Up_Start = clock();
+				item_Checking = true;
 				break;
 			case ITEM_STOP:
 				m_Item_Check.Stop = true;
-				m_Now_Item = ITEM_STOP;
-				m_Timer.Stop_Check = false;
+				item_Checking = true;
 				break;
 			case ITEM_CLEAR:
 				Delete_Virus();
@@ -101,8 +111,7 @@ bool WordManager::Chekcing_Word(string Word)
 				break;
 			case ITEM_BLACK:
 				m_Item_Check.Black = true;
-				m_Now_Item = ITEM_BLACK;
-				m_Timer.Black_Check = false;
+				item_Checking = true;
 				break;
 			}
 
@@ -117,36 +126,120 @@ bool WordManager::Chekcing_Word(string Word)
 
 		}
 	}
-	Item_Ability();
+	
+	if (item_Checking)
+		Item_Ability();
+
 	return Check;
 }
 
 void WordManager::Item_Ability()
 {
+	// 속도 다운 어빌리티 
+	if (m_Item_Check.Speed_Down)
+	{
+		m_Timer.Speed_Down_Start = clock();
+		m_iSpeed += ABILITY;
+	}
+	// 속도 업 어빌리티
 	if (m_Item_Check.Speed_Up)
 	{
-
+		m_Timer.Speed_Up_Start = clock();
+		m_iSpeed -= ABILITY;
 	}
+	// 정지 어빌리티
+	if (m_Item_Check.Stop)
+	{
+		m_Timer.Stop_Start = clock();
+		m_Timer.Stop_Check = false;
+	}
+	// 단어 가리기 어빌리티
+	if (m_Item_Check.Black)
+	{
+		Black_Item();
+		m_Timer.Black_Start = clock();
+		m_Timer.Black_Check = false;
+	}
+}
+
+void WordManager::Black_Item()
+{
+	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
+		(*iter)->Black_Word();
 }
 
 void WordManager::Item_Abliity_Check()
 {
+	if (m_Item_Check.Speed_Down)
+	{
+		m_Timer.Speed_Down_Check = clock();
+		if (m_Timer.Speed_Down_Check - m_Timer.Speed_Down_Start >= ONE_SEC * 3)
+		{
+			m_iSpeed -= ABILITY;
+			m_Timer.Speed_Down_Check = 0;
+			m_Timer.Speed_Down_Start = 0;
+			m_Item_Check.Speed_Down = false;
+		}
+	}
+	if (m_Item_Check.Speed_Up)
+	{
+		m_Timer.Speed_Up_Check = clock();
+		if (m_Timer.Speed_Up_Check - m_Timer.Speed_Up_Start >= ONE_SEC * 3)
+		{
+			m_iSpeed += ABILITY;
+			m_Timer.Speed_Up_Check = 0;
+			m_Timer.Speed_Up_Start = 0;
+			m_Item_Check.Speed_Up = false;
+		}
+	}
 
+	if (m_Item_Check.Stop)
+	{
+		m_Timer.Stop_Time_Check = clock();
+		if (m_Timer.Stop_Time_Check - m_Timer.Stop_Start >= ONE_SEC * 3)
+		{
+			m_Timer.Stop_Time_Check = 0;
+			m_Timer.Stop_Start = 0;
+			m_Timer.Stop_Check = true;
+			m_Item_Check.Stop = false;			
+		}
+	}
+
+	if (m_Item_Check.Black)
+	{
+		m_Timer.Black_Time_Check = clock();
+		if (m_Timer.Black_Time_Check - m_Timer.Black_Start >= ONE_SEC * 2)
+		{
+			m_Timer.Black_Time_Check = 0;
+			m_Timer.Black_Start = 0;
+			m_Timer.Black_Check = true;
+			m_Item_Check.Black = false;
+		}
+	}
 }
 
-bool WordManager::Drop_Time_Control(int &Start_Time, int &Sec_Time, bool &Life_Check) // 아이템 시간 관리
+void WordManager::Create_Word_Count(int Stage)
 {
-	Sec_Time = clock();
-	if ( (Sec_Time - Start_Time >= ONE_SEC + m_iSpeed )  && m_Timer.Stop_Check)  // 1초에 한번씩 작동
+	for (int i = 0; i < Stage; i++) // 횟수가 많으면 많을수록 많이 나옴
 	{
-
-		if (rand() % 3 == 0) // 3/1 확률로 단어가 생성됨... -> 확률 조절 가능하게.Stage 에 따라 나오는 단어 횟수가 쪼오오오오 금씩 늘어나게
+		if (rand() % 4 == 0) // 확률의 숫자가 크면 클 수록 높게 나옴
 			Get_Attack_Word();
+	}
+}
 
+bool WordManager::Drop_Time_Control(int Stage,int &Start_Time, int &Sec_Time, bool &Life_Check) // 아이템 시간 관리
+{
+	Item_Abliity_Check(); //아이템 사용 시간 체크
+	Sec_Time = clock();
+
+	if ( (Sec_Time - Start_Time >= ONE_SEC + m_iSpeed  - ( Stage - 1) * 50)  && m_Timer.Stop_Check)  // 1초에 한번씩 작동
+	{
+		Create_Word_Count(Stage);
+		
 		if (!Hit_Damage())
 			Life_Check = true;
 
-		Start_Time = Sec_Time;
+		Start_Time = Sec_Time;	
 		return true;
 	}
 	return false;

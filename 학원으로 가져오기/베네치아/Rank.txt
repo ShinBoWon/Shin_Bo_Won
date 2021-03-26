@@ -1,9 +1,6 @@
 asd 3 1419
 as 2 11
 fe 1 55
-asd 2 1089
-feadsf 1 959
-sefdfea 1 752
-afd 1 0
-feasd 1 0
-afd 1 0
+
+afed 2 598
+afd 6 1185

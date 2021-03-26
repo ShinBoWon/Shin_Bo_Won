@@ -1,6 +1,8 @@
 #pragma once
 #include "Word.h"
 
+#define ABILITY 500
+
 typedef struct Item_Check
 {
 	bool Speed_Up;
@@ -12,14 +14,16 @@ typedef struct Item_Check
 typedef struct Timer
 {
 	int Speed_Up_Start;
-	int Speed_Up_Stop;
+	int Speed_Up_Check;
 	int Speed_Down_Start;
-	int Speed_Down_Stop;
+	int Speed_Down_Check;
+
 	int Stop_Start;
-	int Stop_Stop;
+	int Stop_Time_Check;
 	bool Stop_Check;
+
 	int Black_Start;
-	int Black_Stop;
+	int Black_Time_Check;
 	bool Black_Check;
 };
 
@@ -32,22 +36,24 @@ private:
 	int m_iWord_Count;
 	int m_iSpeed;
 
-	ITEM m_Now_Item;
-
 	Item_Check m_Item_Check;
 	Timer m_Timer;
 
 public:
 	void Get_List();
 	void Get_Attack_Word();
+	void Create_Word_Count(int Stage);
+	bool Word_Size_Check(int Location_x, int Word_Location,string Word);
 
 	bool Hit_Damage();
 	bool Chekcing_Word(string Word);
+
 	void Item_Ability();
 	void Item_Abliity_Check();
+	void Black_Item();
 
 	void Word_Drop();
-	bool Drop_Time_Control(int &Main_Time, int &Sec_Time, bool &Life_Check );
+	bool Drop_Time_Control(int Stage,int &Main_Time, int &Sec_Time, bool &Life_Check );
 
 	void Delete_Virus();
 	void Delete_List();

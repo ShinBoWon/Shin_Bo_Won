@@ -14,7 +14,7 @@ void Word::Pick_Up(int x_Location, string Word)
 	m_strWord = Word;
 	m_iLocation_x = x_Location;
 	m_iLocation_y = 1;
-	if (rand() % 2 == 0) // 10 분의 1 확률 
+	if (rand() % 2 == 0) // 10 분의 1 확률 로 할 것
 		Get_Item(rand() % ITEM_COUNT);
 	else 
 		m_Item = ITEM_DONT;
@@ -54,6 +54,19 @@ void Word::Drop()
 	m_iLocation_y++;
 }
 
+void Word::Black_Word()
+{
+	Die();
+	m_Draw.gotoxy(m_iLocation_x, m_iLocation_y);
+	char Black = '=';
+	string Blind = "";
+	for (int i = 0; i < m_strWord.size(); i++)
+		Blind += Black;
+	BLUE
+		cout << Blind;
+	ORIGINAL
+}
+
 void Word::Draw_Word(bool Black)
 {
 	Die();
@@ -73,7 +86,7 @@ void Word::Draw_Word(bool Black)
 		for (int i = 0; i < m_strWord.size(); i++)
 			Blind += Black;
 		BLUE
-			cout << m_strWord;
+			cout << Blind;
 		ORIGINAL
 	}
 }
