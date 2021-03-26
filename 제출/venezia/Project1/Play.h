@@ -1,0 +1,60 @@
+#pragma once
+#include "Rank.h"
+#include "WordManager.h"
+
+#define SCORE_UP 200
+#define MAX_WORD 20
+
+enum MENU
+{
+	MENU_GAME_START = 1,
+	MENU_RANK,
+	MENU_GAME_EIXT
+};
+
+typedef struct Player
+{
+	int Score;
+	int Stage;
+	int Life;
+	string Name;
+};
+
+typedef struct Penalty
+{
+
+};
+
+class Play
+{
+private:
+	int m_iStage_Socre;
+	
+	MapDraw m_Draw;
+	Interface m_Interface;
+	Player *m_Player;
+	WordManager m_Manager;
+	Rank m_Rank;
+
+public:
+
+	string Get_Name();	
+	void Enter_Word(string & enter_word , bool & Enter);
+	void Get_Score();
+
+	void Main_Play();
+	void Game_Play();
+	void Save_Game();
+
+	void Stage_up();
+	void Stage_Box();
+
+	void Main();
+	void Input_Data(string Name);
+	void Delete_Data();
+
+
+	Play();
+	~Play();
+};
+
