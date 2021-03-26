@@ -83,18 +83,19 @@ void Play::Get_Score()
 void Play::Game_Play()
 {
 	int Height_Location, Timer, Main_Time = clock();
+	int Penalty_Time = 0;
 	string Input_Word = "";
-	bool Enter = false, Life_Check = false;
+	bool Enter = false, Life_Check = false,Penalty_Check = true;
 	m_Interface.Input_Box();
 
 	while (m_Player->Life != 0 && m_Player->Score <= m_iStage_Socre)
 	{
 		Timer = clock();
 
-		if (kbhit() && !Enter) // 패널티 넣기
+		if (kbhit() && Penalty_Check)
 			Enter_Word(Input_Word, Enter);
 
-		if (Enter)
+		if (Enter && Penalty_Check)
 		{
 			if (!m_Manager.Chekcing_Word(Input_Word)) // 틀렸을때 패널티
 			{
@@ -103,27 +104,42 @@ void Play::Game_Play()
 				Input_Word = " Fail Compare !! "; 
 				m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
 				ORIGINAL
-					Enter = false; // 이거 수정좀 해야할듯.
+					Penalty_Check = false;
+				Penalty_Time = clock();
 			}
 			else
 			{
-				m_Draw.DrawMidText("                     ", WIDTH, HEIGHT * 0.7f + 3);
+				m_Draw.DrawMidText("                 ", WIDTH, HEIGHT * 0.7f + 3);
 				Get_Score();
 				Input_Word = "";
 				m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
 			}
-			
+			Enter = false;
 		} // 엔터 값 까지.
 
-		if (m_Manager.Drop_Time_Control(m_Player->Stage, m_Player->Life, Main_Time, Timer, Life_Check)) // 조금 수정 해야겟다. Life Check 할때
+		if (!Penalty_Check && (Timer - Penalty_Time >= ONE_SEC * 3 ))
+		{
+			Penalty_Check = true;
+			Input_Word = "";
+			m_Draw.DrawMidText("                 ", WIDTH, HEIGHT * 0.7f + 3);
+			Penalty_Time = 0;
+		}
+
+		if (m_Manager.Drop_Time_Control(Main_Time, Timer, Life_Check)) // 조금 수정 해야겟다. Life Check 할때
 		{
 			m_Manager.Word_Drop();
 			m_Interface.Input_Box();
+			if (!Penalty_Check)
+				RED
+			else
+				BLUE
 			m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
+			ORIGINAL
 		}
 
 		if (Life_Check)
 		{
+			m_Player->Life--;
 			m_Interface.Player_Life(m_Player->Life);
 			Life_Check = false;
 		}

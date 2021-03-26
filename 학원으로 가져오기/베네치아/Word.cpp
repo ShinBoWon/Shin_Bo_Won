@@ -49,8 +49,15 @@ void Word::Get_Item(int Rand)
 	}
 }
 
+void Word::Drop()
+{
+	m_iLocation_y++;
+}
+
 void Word::Draw_Word(bool Black)
 {
+	Die();
+	Drop();
 	m_Draw.gotoxy(m_iLocation_x, m_iLocation_y);
 	if (Black)
 	{
@@ -71,14 +78,10 @@ void Word::Draw_Word(bool Black)
 	}
 }
 
-bool Word::Drop() // ¶³¾îÁü °ú µ¿½Ã¿¡ ±×·ÁÁü
+bool Word::Drop_Check() // ¶³¾îÁü °ú µ¿½Ã¿¡ ±×·ÁÁü
 {
-	Die();
 	if (m_iLocation_y + 1< HEIGHT - 2)
-	{
-		m_iLocation_y++;
 		return true;
-	}
 	else
 		return false;	
 }

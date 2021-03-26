@@ -25,7 +25,8 @@ public:
 	void Get_Word(string Word);
 
 	void Pick_Up(int x_Location, string Word);
-	bool Drop();
+	void Drop();
+	bool Drop_Check();
 	void Die();
 	void Get_Item(int Rand);
 	void Draw_Word(bool Black);

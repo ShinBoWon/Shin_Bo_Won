@@ -28,7 +28,6 @@ void WordManager::Get_List()
 	m_Item_Check.Stop = false;
 	m_Timer.Stop_Check = true;
 	m_Timer.Black_Check = true;
-
 }
 
 void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 단어 들이랑 겹치지 않고 하기
@@ -83,11 +82,13 @@ bool WordManager::Chekcing_Word(string Word)
 				m_Item_Check.Speed_Down = true;
 				m_Now_Item = ITEM_SPEED_DOWN;
 				m_iSpeed -= 300;
+				m_Timer.Speed_Down_Start = clock();
 				break;
 			case ITEM_SPEED_UP:
 				m_Item_Check.Speed_Up = true;
 				m_Now_Item = ITEM_SPEED_UP;
 				m_iSpeed += 300;
+				m_Timer.Speed_Up_Start = clock();
 				break;
 			case ITEM_STOP:
 				m_Item_Check.Stop = true;
@@ -116,58 +117,24 @@ bool WordManager::Chekcing_Word(string Word)
 
 		}
 	}
-	Item_Aability();
+	Item_Ability();
 	return Check;
 }
 
-void WordManager::Item_Aability()
+void WordManager::Item_Ability()
 {
-	switch (m_Now_Item)
+	if (m_Item_Check.Speed_Up)
 	{
-	case ITEM_SPEED_DOWN: // 시간 관리.
-		m_Timer.Speed_Down_Start = clock();
-		if (!m_Item_Check.Speed_Down)
-			m_Timer.Speed_Down_Stop = clock();
 
-		if (m_Timer.Speed_Down_Stop - m_Timer.Speed_Down_Start <= ONE_SEC * 3)
-			m_iSpeed = 0;
-		break;
-
-	case ITEM_SPEED_UP:
-		m_Timer.Speed_Up_Start = clock();
-		if (!m_Item_Check.Speed_Down)
-			m_Timer.Speed_Up_Stop = clock();
-
-		if (m_Timer.Speed_Up_Stop - m_Timer.Speed_Up_Start <= ONE_SEC * 3)
-			m_iSpeed = 0;
-		break;
-
-	case ITEM_STOP:
-		m_Timer.Stop_Start = clock();
-
-		if (!m_Item_Check.Speed_Down)
-			m_Timer.Stop_Stop = clock();
-
-		if (m_Timer.Stop_Stop - m_Timer.Stop_Start <= ONE_SEC * 3)
-			m_Timer.Stop_Check = true;
-		break;
-
-	case ITEM_BLACK:
-		m_Timer.Black_Start = clock();
-
-		if (!m_Item_Check.Speed_Down)
-			m_Timer.Black_Stop = clock();
-
-		if (m_Timer.Black_Stop - m_Timer.Black_Start <= ONE_SEC * 3)
-			m_Timer.Black_Check = true;
-		break;
-
-	default:
-		break;
 	}
 }
 
-bool WordManager::Drop_Time_Control(int Stage, int &Life, int &Start_Time, int &Sec_Time, bool &Life_Check) // 아이템 시간 관리
+void WordManager::Item_Abliity_Check()
+{
+
+}
+
+bool WordManager::Drop_Time_Control(int &Start_Time, int &Sec_Time, bool &Life_Check) // 아이템 시간 관리
 {
 	Sec_Time = clock();
 	if ( (Sec_Time - Start_Time >= ONE_SEC + m_iSpeed )  && m_Timer.Stop_Check)  // 1초에 한번씩 작동
@@ -177,10 +144,7 @@ bool WordManager::Drop_Time_Control(int Stage, int &Life, int &Start_Time, int &
 			Get_Attack_Word();
 
 		if (!Hit_Damage())
-		{
-			Life--;
 			Life_Check = true;
-		}
 
 		Start_Time = Sec_Time;
 		return true;
@@ -198,7 +162,7 @@ bool WordManager::Hit_Damage()
 {
 	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
 	{
-		if (!(*iter)->Drop())
+		if (!(*iter)->Drop_Check())
 		{
 			(*iter)->Die();
 			delete *iter;

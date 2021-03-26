@@ -43,10 +43,11 @@ public:
 
 	bool Hit_Damage();
 	bool Chekcing_Word(string Word);
-	void Item_Aability();
+	void Item_Ability();
+	void Item_Abliity_Check();
 
 	void Word_Drop();
-	bool Drop_Time_Control(int Stage, int & Life,int &Main_Time, int &Sec_Time, bool &Life_Check );
+	bool Drop_Time_Control(int &Main_Time, int &Sec_Time, bool &Life_Check );
 
 	void Delete_Virus();
 	void Delete_List();

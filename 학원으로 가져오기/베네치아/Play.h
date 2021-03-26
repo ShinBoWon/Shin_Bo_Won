@@ -20,6 +20,11 @@ typedef struct Player
 	string Name;
 };
 
+typedef struct Penalty
+{
+
+};
+
 class Play
 {
 private:
