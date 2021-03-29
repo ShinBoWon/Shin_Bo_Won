@@ -19,13 +19,13 @@ public:
 	void Main_Menu();
 
 	void Erase_Main_Menu();
-	void Erase_Rank_Box();
 	void Erase_Input_Box();
+
+	void Win_Text();
 
 	void Input_Box();
 	
 	void Player_Score(int Score);
-
 	void Player_Life(int Life);
 
 	

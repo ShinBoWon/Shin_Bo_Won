@@ -9,6 +9,49 @@ Interface::Interface()
 	system(buf);
 }
 
+void Interface::Win_Text()
+{
+	int i = 0, Time = clock(), Sec_Time;
+	char enter;
+	m_Draw.BoxDraw(0, 0, WIDTH, HEIGHT);
+
+	while (1)
+	{
+		Sec_Time = clock();
+		if (Sec_Time - Time >= ONE_SEC)
+		{
+			if (i == 0)
+			{
+				RED
+					i++;
+				m_Draw.DrawMidText("�ڡ١ڡ١ڡ�", WIDTH * 0.5f, HEIGHT * 0.5f);
+				m_Draw.DrawMidText("�ڡ١ڡ١ڡ�", WIDTH * 1.5f, HEIGHT * 0.5f);
+			}
+			else
+			{
+				BLUE
+					i--;
+				m_Draw.DrawMidText("�١ڡ١ڡ١�", WIDTH * 0.5f, HEIGHT * 0.5f);
+				m_Draw.DrawMidText("�١ڡ١ڡ١�", WIDTH * 1.5f, HEIGHT * 0.5f);
+			}
+			m_Draw.DrawMidText(" W i n ", WIDTH, HEIGHT * 0.5f);
+			m_Draw.DrawMidText("Press 'Enter' Over_Game ", WIDTH, HEIGHT * 0.75f);
+			Time = Sec_Time;
+		}
+		if (kbhit())
+		{
+			enter = getch();
+			if (enter == 13)
+				break;
+		}
+	}
+	ORIGINAL
+		m_Draw.DrawMidText("                        ", WIDTH, HEIGHT * 0.75f);
+		m_Draw.DrawMidText("       ", WIDTH, HEIGHT * 0.5f);
+	m_Draw.DrawMidText("            ", WIDTH * 0.5f, HEIGHT * 0.5f);
+	m_Draw.DrawMidText("            ", WIDTH * 1.5f, HEIGHT * 0.5f);
+}
+
 void Interface::Input_Box()
 {
 	BLUE

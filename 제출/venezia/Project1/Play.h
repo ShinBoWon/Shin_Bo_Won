@@ -4,6 +4,7 @@
 
 #define SCORE_UP 200
 #define MAX_WORD 20
+#define LAST_STAGE 10
 
 enum MENU
 {
@@ -18,11 +19,6 @@ typedef struct Player
 	int Stage;
 	int Life;
 	string Name;
-};
-
-typedef struct Penalty
-{
-
 };
 
 class Play

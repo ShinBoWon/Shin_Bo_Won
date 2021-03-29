@@ -31,8 +31,9 @@ public:
 	void Die();
 	void Get_Item(int Rand);
 	void Draw_Word(bool Black);
-	
 
+	void Black_Word();
+	
 	inline string Word_Out(){return m_strWord;}
 	inline ITEM Item_Out() { return m_Item; }
 	inline int Location() { return m_iLocation_x; }

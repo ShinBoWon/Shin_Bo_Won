@@ -28,44 +28,46 @@ void WordManager::Get_List()
 	m_Item_Check.Stop = false;
 	m_Timer.Stop_Check = true;
 	m_Timer.Black_Check = true;
+	m_iMake_Count = 1;
+	m_iPercent = 4;
+}
+
+bool WordManager::Word_Size_Check(int Location_x,int Word_Location,string Word)
+{
+	if (Location_x >= Word_Location && Location_x <= Word_Location + Word.size())
+		return false;
+	else
+		return true;
 }
 
 void WordManager::Get_Attack_Word() // 떨어지는 시간에 맞쳐서 만들어지면서 다른 단어 들이랑 겹치지 않고 같은 위치에서 떨어지지 않게 하기.
 {
-	int Rand_Word, x_Location,Limit_x = WIDTH * 2 - 20;
-	for (int i = 0; i <= m_vecWord.size();i++)
+	int Rand_Word, x_Location,Limit_x = WIDTH * 2 - 22, Word_Count = m_vecWord.size() - 1;
+	bool Same_Check = false;
+	while (1)
 	{
-		Rand_Word = rand() % m_vecWord.size();
-		if (m_listVirus.size() != 0)
+		Rand_Word =  rand() % Word_Count;
+		x_Location = rand() % Limit_x;
+		for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
 		{
-			for (auto iter = m_listVirus.begin(); iter != m_listVirus.end();iter++)
+			if ((*iter)->Word_Out() != m_vecWord[Rand_Word]->Word_Out())
 			{
-				if (m_vecWord[i]->Word_Out() != (*iter)->Word_Out() && m_vecWord[i]->Location() != (*iter)->Location() )
-				{
-					Word* Virus;
-					Virus = new Word;
-					x_Location = rand() % Limit_x + 10;
-					Virus->Pick_Up(x_Location, m_vecWord[Rand_Word]->Word_Out());
-					m_listVirus.push_back(Virus);
-					return;
-				}
-				else
-				{
-					--i;
-					break;
-				}
+				Same_Check = true;
+				break;
 			}
 		}
-		else
+
+		if (Same_Check || m_listVirus.size() == 0)
 		{
 			Word* Virus;
 			Virus = new Word;
-			x_Location = rand() % Limit_x + 10;
+			x_Location = rand() % Limit_x + 2;
 			Virus->Pick_Up(x_Location, m_vecWord[Rand_Word]->Word_Out());
 			m_listVirus.push_back(Virus);
-			return;
+			break;
 		}
 	}
+	
 }
 
 bool WordManager::Chekcing_Word(string Word)
@@ -141,9 +143,16 @@ void WordManager::Item_Ability()
 	// 단어 가리기 어빌리티
 	if (m_Item_Check.Black)
 	{
+		Black_Item();
 		m_Timer.Black_Start = clock();
 		m_Timer.Black_Check = false;
 	}
+}
+
+void WordManager::Black_Item()
+{
+	for (auto iter = m_listVirus.begin(); iter != m_listVirus.end(); iter++)
+		(*iter)->Black_Word();
 }
 
 void WordManager::Item_Abliity_Check()
@@ -186,7 +195,7 @@ void WordManager::Item_Abliity_Check()
 	if (m_Item_Check.Black)
 	{
 		m_Timer.Black_Time_Check = clock();
-		if (m_Timer.Black_Time_Check - m_Timer.Black_Start >= ONE_SEC * 1.5)
+		if (m_Timer.Black_Time_Check - m_Timer.Black_Start >= ONE_SEC * 2)
 		{
 			m_Timer.Black_Time_Check = 0;
 			m_Timer.Black_Start = 0;
@@ -196,11 +205,25 @@ void WordManager::Item_Abliity_Check()
 	}
 }
 
+void WordManager::Check_Stage(int Stage)
+{
+	if (Stage / 4 + 1 > m_iMake_Count)
+		m_iMake_Count++;
+
+	if (m_iPercent <= 1)
+		m_iPercent += 3;
+	else if (m_iPercent - 1 == 0)
+		m_iPercent = 1;
+	else
+		m_iPercent--;
+	
+}
+
 void WordManager::Create_Word_Count(int Stage)
 {
-	for (int i = 0; i < Stage; i++) // 횟수가 많으면 많을수록 많이 나옴
+	for (int i = 0; i < m_iMake_Count; i++) // 횟수가 많으면 많을수록 많이 나옴 1 ~ 3 Stage = 한번씩  4~ 7 Stage 2번 8 ~ 10 3번 반복
 	{
-		if (rand() % 4 == 0) // 확률의 숫자가 크면 클 수록 높게 나옴
+		if (rand() % m_iPercent == 0) // 확률의 숫자가 크면 클 수록 높게 나옴  || 반복 횟수가 늘어날 때 초기화
 			Get_Attack_Word();
 	}
 }

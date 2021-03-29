@@ -50,15 +50,21 @@ void Play::Save_Game()
 
 void Play::Main_Play()
 {
-	while (m_Player->Life != 0)
+	while (m_Player->Life != 0 && m_Player->Stage < LAST_STAGE)
 	{
 		m_Interface.Show_Information(m_Player->Life, m_Player->Score, m_Player->Name);
+		m_Manager.Check_Stage(m_Player->Stage);
 		Stage_Box();
 
 		Game_Play();
 		if (m_Player->Life != 0)
 			Stage_up();
 	}
+
+	if (m_Player->Stage > LAST_STAGE)
+		m_Interface.Win_Text();
+	else
+		m_Draw.BoxDraw(0, 0, WIDTH, HEIGHT);
 
 	Save_Game();
 	Delete_Data();

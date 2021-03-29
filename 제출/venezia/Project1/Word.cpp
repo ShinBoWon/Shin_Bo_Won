@@ -54,6 +54,19 @@ void Word::Drop()
 	m_iLocation_y++;
 }
 
+void Word::Black_Word()
+{
+	Die();
+	m_Draw.gotoxy(m_iLocation_x, m_iLocation_y);
+	char Black = '=';
+	string Blind = "";
+	for (int i = 0; i < m_strWord.size(); i++)
+		Blind += Black;
+	BLUE
+		cout << Blind;
+	ORIGINAL
+}
+
 void Word::Draw_Word(bool Black)
 {
 	Die();

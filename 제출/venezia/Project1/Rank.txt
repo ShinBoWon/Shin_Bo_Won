@@ -3,3 +3,12 @@ as 2 11
 fe 1 55
 
 afed 2 598
+afd 6 1185
+afed 6 805
+afe 1 0
+fed 1 0
+ae 1 0
+aed 1 0
+aef 1 0
+aefd 1 0
+aefe 7 212
