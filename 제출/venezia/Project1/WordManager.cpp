@@ -212,8 +212,6 @@ void WordManager::Check_Stage(int Stage)
 
 	if (m_iPercent <= 1)
 		m_iPercent += 3;
-	else if (m_iPercent - 1 == 0)
-		m_iPercent = 1;
 	else
 		m_iPercent--;
 	
