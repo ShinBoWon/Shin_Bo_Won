@@ -7,11 +7,11 @@ Play::Play()
 
 void Play::Stage_Box() // 인터페이스로 
 {
-	m_Draw.BoxErase(WIDTH, HEIGHT);
+	MapDraw::GetInstance()->BoxErase(WIDTH, HEIGHT);
 	string Stage = to_string(m_Player->Stage);
-	m_Draw.DrawMidText("★ " + Stage + " Stage  ★", WIDTH, HEIGHT * 0.2f);
+	MapDraw::GetInstance()->DrawMidText("★ " + Stage + " Stage  ★", WIDTH, HEIGHT * 0.2f);
 	Sleep(ONE_SEC * 1.5f);
-	m_Draw.DrawMidText("                           ", WIDTH, HEIGHT * 0.2f);
+	MapDraw::GetInstance()->DrawMidText("                           ", WIDTH, HEIGHT * 0.2f);
 }
 
 void Play::Input_Data(string Name)
@@ -64,7 +64,7 @@ void Play::Main_Play()
 	if (m_Player->Stage > LAST_STAGE)
 		Interface::GetInstance()->Win_Text();
 	else
-		m_Draw.BoxDraw(0, 0, WIDTH, HEIGHT);
+		MapDraw::GetInstance()->BoxDraw(0, 0, WIDTH, HEIGHT);
 
 	Save_Game();
 	Delete_Data();
@@ -104,20 +104,20 @@ void Play::Game_Play()
 		{
 			if (!WordManager::GetInstance()->Chekcing_Word(Input_Word))// 틀렸을때 패널티
 			{
-				m_Draw.DrawMidText("                       ", WIDTH, HEIGHT * 0.7f + 3);
+				MapDraw::GetInstance()->DrawMidText("                       ", WIDTH, HEIGHT * 0.7f + 3);
 				RED					
 				Input_Word = " Fail Compare !! "; 
-				m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
+				MapDraw::GetInstance()->DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
 				ORIGINAL
 					Penalty_Check = false;
 				Penalty_Time = clock();
 			}
 			else
 			{
-				m_Draw.DrawMidText("                 ", WIDTH, HEIGHT * 0.7f + 3);
+				MapDraw::GetInstance()->DrawMidText("                 ", WIDTH, HEIGHT * 0.7f + 3);
 				Get_Score();
 				Input_Word = "";
-				m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
+				MapDraw::GetInstance()->DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
 			}
 			Enter = false;
 		} // 엔터 값 까지.
@@ -126,7 +126,7 @@ void Play::Game_Play()
 		{
 			Penalty_Check = true;
 			Input_Word = "";
-			m_Draw.DrawMidText("                 ", WIDTH, HEIGHT * 0.7f + 3);
+			MapDraw::GetInstance()->DrawMidText("                 ", WIDTH, HEIGHT * 0.7f + 3);
 			Penalty_Time = 0;
 		}
 		if (WordManager::GetInstance()->Drop_Time_Control(m_Player->Stage, Main_Time, Timer, Life_Check))
@@ -138,7 +138,7 @@ void Play::Game_Play()
 				RED
 			else
 				BLUE
-			m_Draw.DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
+				MapDraw::GetInstance()->DrawMidText(Input_Word, WIDTH, HEIGHT * 0.7f + 3);
 			ORIGINAL
 		}
 
@@ -166,8 +166,8 @@ void Play::Enter_Word(string & enter_word , bool  & Enter)
 		else if (word >= 'a' && word <= 'z')
 			enter_word += word;
 		BLUE
-		m_Draw.DrawMidText("                   ", WIDTH, HEIGHT * 0.7f + 3);
-		m_Draw.DrawMidText(enter_word, WIDTH, HEIGHT * 0.7f + 3);
+			MapDraw::GetInstance()->DrawMidText("                   ", WIDTH, HEIGHT * 0.7f + 3);
+		MapDraw::GetInstance()->DrawMidText(enter_word, WIDTH, HEIGHT * 0.7f + 3);
 		ORIGINAL
 	}
 }
@@ -178,9 +178,9 @@ string Play::Get_Name()
 	string Name; 
 
 	BLUE
-		m_Draw.DrawMidText("                   ", WIDTH, HEIGHT* 0.7f + 3);
-	m_Draw.DrawMidText("이름을 입력 하세요", WIDTH, HEIGHT * 0.6f);
-	m_Draw.DrawMidText("", WIDTH, HEIGHT * 0.7f + 3);
+		MapDraw::GetInstance()->DrawMidText("                   ", WIDTH, HEIGHT* 0.7f + 3);
+	MapDraw::GetInstance()->DrawMidText("이름을 입력 하세요", WIDTH, HEIGHT * 0.6f);
+	MapDraw::GetInstance()->DrawMidText("", WIDTH, HEIGHT * 0.7f + 3);
 	while (Name.length() < 10)
 	{
 		Name_Ward = getch();
@@ -191,13 +191,13 @@ string Play::Get_Name()
 		else if (Name_Ward >= 'a' && Name_Ward <= 'z')
 			Name += Name_Ward;		
 
-		m_Draw.DrawMidText("                   ", WIDTH, HEIGHT * 0.7f + 3);
-		m_Draw.DrawMidText(Name, WIDTH, HEIGHT * 0.7f + 3);
+		MapDraw::GetInstance()->DrawMidText("                   ", WIDTH, HEIGHT * 0.7f + 3);
+		MapDraw::GetInstance()->DrawMidText(Name, WIDTH, HEIGHT * 0.7f + 3);
 
 	}
 	if (Name.length() == 10)
 	{
-		m_Draw.DrawMidText("10글자 입력 초과!!", WIDTH, HEIGHT * 0.6f + 1);
+		MapDraw::GetInstance()->DrawMidText("10글자 입력 초과!!", WIDTH, HEIGHT * 0.6f + 1);
 		char skip = getch();
 	}
 	ORIGINAL
@@ -210,21 +210,22 @@ void Play::Main()
 	while (1)
 	{
 		Interface::GetInstance()->Main_Menu();
-		switch (m_Draw.MenuSelectCursor(3,3 /* 메뉴 간의 거리  */,WIDTH / 2 - 8, HEIGHT * 0.4f /* 커서의 시작 위치  */))
+		switch (MapDraw::GetInstance()->MenuSelectCursor(3,3 /* 메뉴 간의 거리  */,WIDTH / 2 - 8, HEIGHT * 0.4f /* 커서의 시작 위치  */))
 		{	
 		case MENU_GAME_START:
-			m_Draw.BoxErase(WIDTH, HEIGHT);
-
+			MapDraw::GetInstance()->BoxErase(WIDTH, HEIGHT);
 			Interface::GetInstance()->Show_Reading();
 			Input_Data(Get_Name());
 			Main_Play();
 			break;
 		case MENU_RANK:
+			Interface::GetInstance()->Erase_Main_Menu();
 			m_Rank.Rank_List();
 			break;
 		case MENU_GAME_EIXT:
 			Interface::DeleteInstance();
 			WordManager::DeleteInstance();
+			MapDraw::DeleteInstance();
 			return;
 		}
 	}

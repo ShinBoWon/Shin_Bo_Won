@@ -1,6 +1,5 @@
 #pragma once
 #include "Interface.h"
-#include "Singleton.h"
 
 typedef struct Ranker
 {
@@ -11,9 +10,7 @@ typedef struct Ranker
 class Rank 
 {
 private:
-	Interface m_Interface;
 	vector<Ranker*> m_vecRank;	
-	MapDraw m_Draw;
 public:
 
 	void Load_Ranker();

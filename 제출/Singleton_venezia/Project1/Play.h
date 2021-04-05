@@ -26,7 +26,6 @@ class Play
 private:
 	int m_iStage_Socre;
 	
-	MapDraw m_Draw;
 	Player *m_Player;
 	Rank m_Rank;
 

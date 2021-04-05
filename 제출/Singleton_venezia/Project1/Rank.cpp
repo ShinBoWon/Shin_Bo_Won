@@ -26,25 +26,25 @@ void Rank::Rank_List()
 {
 	string Change ;
 	
-	m_Interface.Erase_Main_Menu();
 	Load_Ranker();
-	m_Draw.BoxDraw(WIDTH, HEIGHT * 0.1f + 1 , 30, 4);
-	m_Draw.DrawMidText(" Ranking ", WIDTH, HEIGHT * 0.1f + 3);
+	
+	MapDraw::GetInstance()->BoxDraw(WIDTH, HEIGHT * 0.1f + 1 , 30, 4);
+	MapDraw::GetInstance()->DrawMidText(" Ranking ", WIDTH, HEIGHT * 0.1f + 3);
 	
 	for (int i = 1; i < WIDTH - 1; i++)
-		m_Draw.DrawPoint("=", i, HEIGHT * 0.3f);
+		MapDraw::GetInstance()->DrawPoint("=", i, HEIGHT * 0.3f);
 
-	m_Draw.DrawMidText("Name" , WIDTH * 0.7f,HEIGHT * 0.3f +2);
-	m_Draw.DrawMidText("Stage", WIDTH , HEIGHT * 0.3f + 2);
-	m_Draw.DrawMidText("Score", WIDTH * 1.35f, HEIGHT * 0.3f + 2);
+	MapDraw::GetInstance()->DrawMidText("Name" , WIDTH * 0.7f,HEIGHT * 0.3f +2);
+	MapDraw::GetInstance()->DrawMidText("Stage", WIDTH , HEIGHT * 0.3f + 2);
+	MapDraw::GetInstance()->DrawMidText("Score", WIDTH * 1.35f, HEIGHT * 0.3f + 2);
 
 	int i = 1;
 
 	for (auto iter = m_vecRank.begin(); iter != m_vecRank.end(); iter++)
 	{
-		m_Draw.DrawMidText( (*iter)->Ranker_Name, WIDTH * 0.7f, HEIGHT * 0.3f + 2 + i);
-		m_Draw.DrawMidText( to_string((*iter)->Ranker_Stage), WIDTH, HEIGHT * 0.3f + 2 + i);
-		m_Draw.DrawMidText( to_string((*iter)->Ranker_Score), WIDTH * 1.35f, HEIGHT * 0.3f + 2 + i);
+		MapDraw::GetInstance()->DrawMidText( (*iter)->Ranker_Name, WIDTH * 0.7f, HEIGHT * 0.3f + 2 + i);
+		MapDraw::GetInstance()->DrawMidText( to_string((*iter)->Ranker_Stage), WIDTH, HEIGHT * 0.3f + 2 + i);
+		MapDraw::GetInstance()->DrawMidText( to_string((*iter)->Ranker_Score), WIDTH * 1.35f, HEIGHT * 0.3f + 2 + i);
 		i += 2;
 	}
 
@@ -82,9 +82,9 @@ void Rank::Delete_Data()
 	int i = 1;
 	for (auto iter = m_vecRank.begin(); iter != m_vecRank.end(); iter++)
 	{
-		m_Draw.DrawMidText("            ", WIDTH * 0.7f, HEIGHT * 0.3f + 2 + i);
-		m_Draw.DrawMidText("            ", WIDTH, HEIGHT * 0.3f + 2 + i);
-		m_Draw.DrawMidText("            ", WIDTH * 1.35f, HEIGHT * 0.3f + 2 + i);
+		MapDraw::GetInstance()->DrawMidText("            ", WIDTH * 0.7f, HEIGHT * 0.3f + 2 + i);
+		MapDraw::GetInstance()->DrawMidText("            ", WIDTH, HEIGHT * 0.3f + 2 + i);
+		MapDraw::GetInstance()->DrawMidText("            ", WIDTH * 1.35f, HEIGHT * 0.3f + 2 + i);
 		i += 2;
 
 		delete (*iter); 
@@ -96,19 +96,19 @@ void Rank::Delete_Data()
 void Rank::Erase()
 {
 	// 상자 지우기
-	m_Draw.BoxDraw(WIDTH, HEIGHT * 0.1f + 1, 30, 4);
+	MapDraw::GetInstance()->BoxDraw(WIDTH, HEIGHT * 0.1f + 1, 30, 4);
 	for (int i = 0; i <= 4; i++)
-		m_Draw.DrawMidText("                                                               ", WIDTH, HEIGHT * 0.1f + i);
+		MapDraw::GetInstance()->DrawMidText("                                                               ", WIDTH, HEIGHT * 0.1f + i);
 
 	// 맨위 rank 표시 지우기
-	m_Draw.DrawMidText("          ", WIDTH, HEIGHT * 0.1f + 3);
+	MapDraw::GetInstance()->DrawMidText("          ", WIDTH, HEIGHT * 0.1f + 3);
 	// 첫단 지우기
-	m_Draw.DrawMidText("      ", WIDTH * 0.7f, HEIGHT * 0.3f + 2);
-	m_Draw.DrawMidText("      ", WIDTH, HEIGHT * 0.3f + 2);
-	m_Draw.DrawMidText("      ", WIDTH * 1.35f, HEIGHT * 0.3f + 2);
+	MapDraw::GetInstance()->DrawMidText("      ", WIDTH * 0.7f, HEIGHT * 0.3f + 2);
+	MapDraw::GetInstance()->DrawMidText("      ", WIDTH, HEIGHT * 0.3f + 2);
+	MapDraw::GetInstance()->DrawMidText("      ", WIDTH * 1.35f, HEIGHT * 0.3f + 2);
 	// 줄 지우기
 	for (int i = 1; i < WIDTH - 1; i++)
-		m_Draw.DrawPoint(" ", i, HEIGHT * 0.3f);	
+		MapDraw::GetInstance()->DrawPoint(" ", i, HEIGHT * 0.3f);
 
 	Delete_Data();
 }

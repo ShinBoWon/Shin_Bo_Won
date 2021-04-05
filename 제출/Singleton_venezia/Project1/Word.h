@@ -18,8 +18,6 @@ private:
 	int m_iLocation_x; // x,y 좌표 위치
 	int m_iLocation_y;
 	string m_strWord; // 불러 들여온 단어
-	MapDraw m_Draw;
-
 	ITEM m_Item;
 
 public:

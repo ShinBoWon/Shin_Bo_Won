@@ -1,5 +1,6 @@
 #pragma once
 #include"mecro.h"
+#include "Singleton.h"
 #define UP 'w'
 #define DOWN 's'
 #define ENTER 13
@@ -13,7 +14,7 @@ enum PLAYING
 	PLAYING_SAVE,
 	PLAYING_EXIT
 };
-class MapDraw
+class MapDraw :public Singleton<MapDraw>
 {
 public:
 	void BoxDraw(int Start_x,int Start_y, int Width, int Height);

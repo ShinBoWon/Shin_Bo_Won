@@ -22,7 +22,7 @@ void Word::Pick_Up(int x_Location, string Word)
 
 void Word::Die()
 {
-	m_Draw.gotoxy(m_iLocation_x, m_iLocation_y);
+	MapDraw::GetInstance()->gotoxy(m_iLocation_x, m_iLocation_y);
 	for (int i = 0; i < m_strWord.size(); i++)
 		cout << " ";
 }
@@ -57,7 +57,7 @@ void Word::Drop()
 void Word::Black_Word()
 {
 	Die();
-	m_Draw.gotoxy(m_iLocation_x, m_iLocation_y);
+	MapDraw::GetInstance()->gotoxy(m_iLocation_x, m_iLocation_y);
 	char Black = '=';
 	string Blind = "";
 	for (int i = 0; i < m_strWord.size(); i++)
@@ -71,7 +71,7 @@ void Word::Draw_Word(bool Black)
 {
 	Die();
 	Drop();
-	m_Draw.gotoxy(m_iLocation_x, m_iLocation_y);
+	MapDraw::GetInstance()->gotoxy(m_iLocation_x, m_iLocation_y);
 	if (Black)
 	{
 		if (m_Item != ITEM_DONT)

@@ -8,9 +8,6 @@
 
 class Interface : public Singleton<Interface>
 {
-private:
-	MapDraw m_Draw;
-
 public:
 	void Show_Reading();
 	void Make_Box();
