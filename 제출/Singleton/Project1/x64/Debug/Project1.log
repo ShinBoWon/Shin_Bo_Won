@@ -1,3 +1,0 @@
-﻿  StudentManager.cpp
-d:\공부\학원공부\project1\project1\student.h(10): warning C4091: 'typedef ': 변수를 선언하지 않으면 'Person' 왼쪽은 무시됩니다.
-  Project1.vcxproj -> D:\공부\학원공부\Project1\x64\Debug\z.exe
