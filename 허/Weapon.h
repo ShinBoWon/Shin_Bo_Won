@@ -22,7 +22,7 @@ protected:
 
 public:
 	
-	virtual int Attack(int Character_Demage) {};
+	virtual int Attack(int Character_Demage) { return 1; };
 	void Get_Data(string Kind, string Name, int Price, int Demage);
 	void Out_Information(int i);
 

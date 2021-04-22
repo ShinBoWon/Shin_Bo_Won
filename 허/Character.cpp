@@ -3,8 +3,6 @@
 
 Character::Character()
 {
-	m_Main_Inven = new InvenWeapon("test");
-	m_Weapon = m_Main_Inven->Out_Data();
 }
 
 void Character::Out_Information(int x, int y)
@@ -28,10 +26,8 @@ void Character::Out_Information(int x, int y)
 		m_Draw.gotoxy(x, y + 5);
 		// 가지고 있는 무기의 갯수 체크
 		// 만약에 갯수를 체크 했다면 무기를 바꿀것인지 아닌지 체크
-		// 무기를 바꾼다고 한다면 주소값만 바꾸는 방향으로 
-		
-	}
-
+		// 무기를 바꾼다고 한다면 주소값만 바꾸는 방향으로 												 		
+	}																									 
 }
 
 void Character::Fight_Win(Character * Fighter)

@@ -3,7 +3,9 @@
 
 Player::Player()
 {
-
+	m_Main_Bag = new Bag("Main_Bag");
+	m_Weapon_Bag = new Bag("Weapon_Bag");
+	m_Inven_Weapon = new InvenWeapon("PlayerWeapon");
 }
 
 FIGHT Player::Attack_Try()

@@ -23,7 +23,30 @@ string Inventory::GetName()
 
 void Bag::Show_Data(int Height)
 {
-	
+	for (auto iter = Bag_Weapon.begin(); iter != Bag_Weapon.end(); iter++)
+		(*iter)->Show_Data(Height += 2);		 		 	
+}
+Weapon * Bag::Out_Data()
+{
+	int Select, Weapon_Number = 0;
+	m_Draw.gotoxy(WIDTH / 4, HEIGHT * 0.1f);
+	if (Bag_Weapon.size() != 0)
+	{
+		cout << " 가방에 있는 무기의 갯수는 " << Bag_Weapon.size()<< "입니다" << endl;
+		cout << " 필요한 무기의 번호를 입력 하세요 " << endl;
+		cin >> Select;
+		for (auto iter = Bag_Weapon.begin(); iter != Bag_Weapon.end(); iter++)
+		{
+			if (Select == Weapon_Number)
+				return (*iter)->Out_Data();
+			Weapon_Number++;
+		}
+	}
+	else
+	{
+		cout << "가방에 무기가 존재 하지 않습니다. ";
+		return NULL;
+	}
 }
 
 void Bag::AddInventory(Inventory* inventory)

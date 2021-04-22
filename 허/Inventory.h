@@ -5,6 +5,7 @@ class Inventory	: public Weapon
 	Inventory* parent;
 	const string name;
 public:
+	Inventory() {};
 	Inventory(string name);
 
 	virtual Weapon* Out_Data() = 0;
@@ -27,7 +28,7 @@ public:
 	Bag(string name) : Inventory(name) {};
 	~Bag() { Bag_Weapon.clear(); };
 
-	Weapon * Out_Data() {};
+	Weapon * Out_Data();
 	void Get_Weapon(Weapon * Data) {};
 	void Show_Data(int Height) override;
 	void AddInventory(Inventory* inventory) override;

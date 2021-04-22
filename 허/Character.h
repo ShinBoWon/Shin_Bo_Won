@@ -31,7 +31,7 @@ typedef struct Information
 
 };
 
-class Character
+class Character 
 {
 private:
 	
@@ -40,10 +40,7 @@ protected:
 
 	Weapon *m_Weapon;
 	WEAPON m_eWeapon;
-	MapDraw m_Draw;
-
-	Inventory * m_Main_Inven;
-	Inventory * m_Weapon_Bag;
+	MapDraw m_Draw;	
 
 	virtual void Level_Up();
 
