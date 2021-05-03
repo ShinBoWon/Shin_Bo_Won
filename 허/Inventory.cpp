@@ -1,9 +1,14 @@
 #include "Inventory.h"
 
 
-Inventory::Inventory(string name) : name(name)
+Inventory::Inventory()
 {
 	parent = NULL;
+}
+
+void Inventory::GetName(string Get_name)
+{
+	name = Get_name;
 }
 
 void Inventory::SetParent(Inventory * _parent)
@@ -51,8 +56,9 @@ Weapon * Bag::Out_Data()
 
 void Bag::AddInventory(Inventory* inventory)
 {
-
+	// Inventory 로 가져온 데이터의 부모를 현제 지금의 주소로 선언
 	inventory->SetParent(this);	
+	// 가져온 Inventory 를 vector 에 기입.
 	Bag_Weapon.push_back(inventory);
 }
 
