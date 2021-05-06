@@ -1,80 +1,20 @@
 #include "Inventory.h"
 
-
-Inventory::Inventory()
+void PlayerWeapon::Show_Data(int Height)
 {
-	parent = NULL;
+	m_Draw.gotoxy(WIDTH / 6, Height);
+	cout << "이름 : " << m_strName << " 종류 : " << m_strKind << endl;
+	cout <<" 공격력 : " << m_iDamege << " 가격 : " << m_iPrice << endl;
 }
 
-void Inventory::GetName(string Get_name)
+void Bag::Add_Data(Slot* Data)
 {
-	name = Get_name;
-}
-
-void Inventory::SetParent(Inventory * _parent)
-{
-	parent = _parent;
-}
-
-Inventory * Inventory::GetParent()
-{
-	return parent;
-}
-
-string Inventory::GetName()
-{
-	return name;
+	m_Bag.push_back(Data);
 }
 
 void Bag::Show_Data(int Height)
 {
-	for (auto iter = Bag_Weapon.begin(); iter != Bag_Weapon.end(); iter++)
-		(*iter)->Show_Data(Height += 2);		 		 	
-}
-Weapon * Bag::Out_Data()
-{
-	int Select, Weapon_Number = 0;
-	m_Draw.gotoxy(WIDTH / 4, HEIGHT * 0.1f);
-	if (Bag_Weapon.size() != 0)
-	{
-		cout << " 가방에 있는 무기의 갯수는 " << Bag_Weapon.size()<< "입니다" << endl;
-		cout << " 필요한 무기의 번호를 입력 하세요 " << endl;
-		cin >> Select;
-		for (auto iter = Bag_Weapon.begin(); iter != Bag_Weapon.end(); iter++)
-		{
-			if (Select == Weapon_Number)
-				return (*iter)->Out_Data();
-			Weapon_Number++;
-		}
-	}
-	else
-	{
-		cout << "가방에 무기가 존재 하지 않습니다. ";
-		return NULL;
-	}
-}
-
-void Bag::AddInventory(Inventory* inventory)
-{
-	// Inventory 로 가져온 데이터의 부모를 현제 지금의 주소로 선언
-	inventory->SetParent(this);	
-	// 가져온 Inventory 를 vector 에 기입.
-	Bag_Weapon.push_back(inventory);
-}
-
-void Bag::RemoveInventory(Inventory* inventory)
-{
-	vector<Inventory*>::iterator remove = find(Bag_Weapon.begin(), Bag_Weapon.end(), inventory);
-
-	if (remove != Bag_Weapon.end())
-	{
-		Bag_Weapon.erase(remove);
-	}
-}
-
-void InvenWeapon::Show_Data(int Height)
-{
-	m_Draw.gotoxy(WIDTH / 4, Height);
-	cout << "무기 종류 : " << m_Data->Out_Kind() << " 무기 이름 : " << m_Data->Out_Name() << endl;
-	cout << "무기 가격 : " << m_Data->Out_Price() << " 무기 공격력 : " << m_Data->Out_Demage() << endl;
+	int Start_Height = Height * 0.1f;
+	for (auto iter = m_Bag.begin(); iter != m_Bag.end(); iter++)	   // + 2개 씩
+		(*iter)->Show_Data(Start_Height += 2);
 }

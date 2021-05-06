@@ -41,7 +41,6 @@ public:
 
 	void Data_Save();
 
-
 	void Play_Menu();
 	void Main_Menu();
 	void Dongeon_Menu(int Height);

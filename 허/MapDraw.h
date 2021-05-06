@@ -13,7 +13,7 @@ enum PLAYING
 	PLAYING_SAVE,
 	PLAYING_EXIT
 };
-class MapDraw
+class MapDraw // 어디서든 사용이 가능 하고 namespace 화 해서 
 {
 public:
 	void BoxDraw(int Start_x,int Start_y, int Width, int Height);

@@ -22,7 +22,7 @@ void Character::Out_Information(int x, int y)
 	cout << m_Information.Gold;
 	if (m_eWeapon != WEAPON_NOT) // 무기 존제 유무 체크
 	{
-		m_Draw.DrawMidText("무기타입 : " + m_Weapon->Out_Kind() + " 무기 이름 :" + m_Weapon->Out_Name() + "공격력 : " + to_string(m_Weapon->Out_Demage()), x*0.2f, y + 4);
+		m_Draw.DrawMidText("무기타입 : " + m_Weapon->Get_Kind() + " 무기 이름 :" + m_Weapon->Get_Name() + "공격력 : " + to_string(m_Weapon->Get_Damege()), x*0.2f, y + 4);
 		m_Draw.gotoxy(x, y + 5);
 		// 가지고 있는 무기의 갯수 체크
 		// 만약에 갯수를 체크 했다면 무기를 바꿀것인지 아닌지 체크
@@ -105,10 +105,10 @@ void Character::Data_Save(int Number, string File)
 	if (m_eWeapon != WEAPON_NOT)
 	{
 		save << 1;
-		save << " " << m_Weapon->Out_Kind();
-		save << " " << m_Weapon->Out_Name();
-		save << " " << m_Weapon->Out_Demage();
-		save << " " << m_Weapon->Out_Price();
+		save << " " << m_Weapon->Get_Kind();
+		save << " " << m_Weapon->Get_Name();
+		save << " " << m_Weapon->Get_Damege();
+		save << " " << m_Weapon->Get_Price();
 	}
 	else
 		save << 0;

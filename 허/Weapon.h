@@ -1,5 +1,6 @@
 #pragma once
-#include "MapDraw.h"
+#include "Item.h"
+
 enum WEAPON
 {
 	WEAPON_DAGGER = 1,
@@ -10,40 +11,16 @@ enum WEAPON
 	WEAPON_HAMMER,	
 	WEAPON_NOT
 };
-class Weapon
-{
-protected:
-	string m_strName;
-	string m_strKind;
-	int m_iPrice;
-	int m_iDemage;
 
-	MapDraw m_Draw;
-
+class Weapon : public Item
+{	
 public:
 	
-	virtual int Attack(int Character_Demage) { return 1; };
-	void Get_Data(string Kind, string Name, int Price, int Demage);
+	virtual int Attack(int Character_Demage) = 0 ;
 	void Out_Information(int i);
 
-	inline string Out_Name()
-	{
-		return m_strName;
-	}
-	inline string Out_Kind()
-	{
-		return m_strKind;
-	}
-	inline int Out_Price()
-	{
-		return m_iPrice;
-	}
-	inline int Out_Demage()
-	{
-		return m_iDemage;
-	}
 	Weapon();
-	~Weapon();
+	virtual ~Weapon();
 
 };
 

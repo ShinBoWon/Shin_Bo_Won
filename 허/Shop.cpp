@@ -20,42 +20,42 @@ void Shop::Load_Weapon(string File)
 		{
 			Sword *Data;
 			Data = new Sword;
-			(*Data).Get_Data(Kind, Name, Price, Demage);
+			(*Data).Set_Data(Name, Kind, Price, Demage);
 			m_vecSword.push_back(Data);
 		}
 		else if (Kind == "Dagger")
 		{
 			Dagger *Data;
 			Data = new Dagger;
-			(*Data).Get_Data(Kind, Name, Price, Demage);
+			(*Data).Set_Data(Name, Kind, Price, Demage);
 			m_vecDagger.push_back(Data);
 		}
 		else if (Kind == "Hammer")
 		{
 			Hammer *Data;
 			Data = new Hammer;
-			(*Data).Get_Data(Kind, Name, Price, Demage);
+			(*Data).Set_Data(Name, Kind, Price, Demage);
 			m_vecHammer.push_back(Data);
 		}
 		else if (Kind == "Bow")
 		{
 			Bow *Data;
 			Data = new Bow;
-			(*Data).Get_Data(Kind, Name, Price, Demage);
+			(*Data).Set_Data(Name, Kind, Price, Demage);
 			m_vecBow.push_back(Data);
 		}
 		else if (Kind == "Gun")
 		{
 			Gun *Data;
 			Data = new Gun;
-			(*Data).Get_Data(Kind, Name, Price, Demage);
+			(*Data).Set_Data(Name, Kind, Price, Demage);
 			m_vecGun.push_back(Data);
 		}
 		else if (Kind == "Wand")
 		{
 			Wand *Data;
 			Data = new Wand;
-			(*Data).Get_Data(Kind, Name, Price, Demage);
+			(*Data).Set_Data(Name, Kind, Price, Demage);
 			m_vecWand.push_back(Data);
 		}
 	}
@@ -185,7 +185,7 @@ void Shop::Weapon_Store(Player *player )
 		} // 예외 조건들 
 		else if (Select >= 0 && Select <= count )
 		{
-			if (player->Out_Gold() >= m_vecTemp[Select + Page * 5 - 1]->Out_Price())
+			if (player->Out_Gold() >= m_vecTemp[Select + Page * 5 - 1]->Get_Price())
 				player->Get_Weapon(m_vecTemp[Select + Page * 5 - 1]);// 지역 변수라.
 
 			// 무기를 선택하고 다시 선택 할 수 있으니 선택한 목록을 다시 그리는 조건
@@ -285,7 +285,7 @@ Weapon* Shop::Load_Weapon(string Kind, string Name)
 	Player_Data_Load(Kind);
 	for (int i = 0; i < m_vecTemp.size(); i++)
 	{
-		if (m_vecTemp[i]->Out_Name() == Name)
+		if (m_vecTemp[i]->Get_Name() == Name)
 			Data = m_vecTemp[i];
 	}
 	m_vecTemp.clear();

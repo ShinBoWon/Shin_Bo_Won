@@ -3,9 +3,6 @@
 
 Player::Player()
 {
-	m_Main_Bag = new Bag("Main_Bag");
-	m_Weapon_Bag = new Bag("Weapon_Bag");
-	m_Inven_Weapon = new InvenWeapon("PlayerWeapon");
 }
 
 FIGHT Player::Attack_Try()
@@ -29,14 +26,14 @@ FIGHT Player::Attack_Try()
 void Player::Load_Weapon(Weapon * weapon) // 저장된 무기 불러오기
 {
 	m_Weapon = weapon;
-	Has_Weapon(m_Weapon->Out_Kind());
+	Has_Weapon(m_Weapon->Get_Kind());
 }
 
 void Player::Get_Weapon(Weapon *weapon)
 {
 	m_Weapon = weapon;
-	Has_Weapon(m_Weapon->Out_Kind());
-	m_Information.Gold -= weapon->Out_Price();
+	Has_Weapon(m_Weapon->Get_Kind());
+	m_Information.Gold -= weapon->Get_Price();
 }
 
 void Player::Has_Weapon(string Kind)
@@ -62,42 +59,42 @@ void Player::Has_Load_Weapon(string Kind, string Name, int Demage, int Price)
 	{
 		Dagger * dagger;
 		dagger = new Dagger;
-		dagger->Get_Data(Kind,Name,Price,Demage);
+		dagger->Set_Data(Name,Kind,Price,Demage);
 		m_Weapon = dagger;
 	}
 	else if (Kind == "Gun")
 	{
 		Gun * gun;
 		gun = new Gun;
-		gun->Get_Data(Kind, Name, Price, Demage);
+		gun->Set_Data(Name, Kind, Price, Demage);
 		m_Weapon = gun;
 	}
 	else if (Kind == "Bow")
 	{
 		Bow * bow;
 		bow = new Bow;
-		bow->Get_Data(Kind, Name, Price, Demage);
+		bow->Set_Data(Name, Kind, Price, Demage);
 		m_Weapon = bow;
 	}
 	else if (Kind == "Sword")
 	{
 		Sword * sword;
 		sword = new Sword;
-		sword->Get_Data(Kind, Name, Price, Demage);
+		sword->Set_Data(Name, Kind, Price, Demage);
 		m_Weapon = sword;
 	}
 	else if (Kind == "Wnad")
 	{
 		Wand * wand;
 		wand = new Wand;
-		wand->Get_Data(Kind, Name, Price, Demage);
+		wand->Set_Data(Name, Kind, Price, Demage);
 		m_Weapon = wand;
 	}
 	else if (Kind == "Hammer")
 	{
 		Hammer * hammer;
 		hammer = new Hammer;
-		hammer->Get_Data(Kind, Name, Price, Demage);
+		hammer->Set_Data(Name, Kind, Price, Demage);
 		m_Weapon = hammer;
 	}
 }

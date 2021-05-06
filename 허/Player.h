@@ -8,14 +8,10 @@
 #include "Wand.h"
 
 
-class Player : public Character, public Inventory
+class Player : public Character
 {
 private:
 	MapDraw m_Draw;
-	Inventory * m_Main_Bag;
-	Inventory * m_Weapon_Bag;
-	Inventory * m_Inven_Weapon;
-	
 public:
 
 	FIGHT Attack_Try();
@@ -30,11 +26,11 @@ public:
 
 	inline string Out_Weapon_Name()
 	{
-		return m_Weapon->Out_Name();
+		return m_Weapon->Get_Name();
 	}
 	inline string Out_Weapon_Kind()
 	{
-		return m_Weapon->Out_Kind();
+		return m_Weapon->Get_Kind();
 	}
 
 	Player();

@@ -50,10 +50,10 @@ void Monster::Data_Save_Add(int Number, string File)
 
 	if (m_eWeapon != WEAPON_NOT)
 	{
-		save << " " << m_Weapon->Out_Kind();
-		save << " " << m_Weapon->Out_Name();
-		save << " " << m_Weapon->Out_Demage();
-		save << " " << m_Weapon->Out_Price();
+		save << " " << m_Weapon->Get_Kind();
+		save << " " << m_Weapon->Get_Name();
+		save << " " << m_Weapon->Get_Damege();
+		save << " " << m_Weapon->Get_Price();
 	}
 	save.close();
 }
