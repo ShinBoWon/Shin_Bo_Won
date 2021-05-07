@@ -7,6 +7,16 @@ void PlayerWeapon::Show_Data(int Height)
 	cout <<" 공격력 : " << m_iDamege << " 가격 : " << m_iPrice << endl;
 }
 
+Weapon * PlayerWeapon::Get_Address()
+{
+	return m_Weapon;
+}
+
+void PlayerWeapon::Set_Weapon(Weapon* Data)
+{
+	m_Weapon = Data;
+}
+
 void Bag::Add_Data(Slot* Data)
 {
 	m_Bag.push_back(Data);

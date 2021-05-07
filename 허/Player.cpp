@@ -3,6 +3,7 @@
 
 Player::Player()
 {
+	
 }
 
 FIGHT Player::Attack_Try()
@@ -31,9 +32,20 @@ void Player::Load_Weapon(Weapon * weapon) // 저장된 무기 불러오기
 
 void Player::Get_Weapon(Weapon *weapon)
 {
-	m_Weapon = weapon;
-	Has_Weapon(m_Weapon->Get_Kind());
-	m_Information.Gold -= weapon->Get_Price();
+	if (m_eWeapon != WEAPON_NOT )
+	{
+		m_Weapon = weapon;
+		Has_Weapon(m_Weapon->Get_Kind());
+		m_Information.Gold -= weapon->Get_Price();
+	}
+	else
+	{
+		m_temWeapon->Set_Weapon(m_Weapon);
+		m_Bag->Add_Data(m_temWeapon);
+		m_Weapon = weapon;
+		Has_Weapon(m_Weapon->Get_Kind());
+		m_Information.Gold -= weapon->Get_Price();
+	}
 }
 
 void Player::Has_Weapon(string Kind)

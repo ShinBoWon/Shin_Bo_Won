@@ -41,6 +41,8 @@ protected:
 	Weapon *m_Weapon;
 	WEAPON m_eWeapon;
 	MapDraw m_Draw;	
+	Bag* m_Bag;
+	Slot * m_temWeapon;
 
 	virtual void Level_Up();
 

@@ -6,12 +6,10 @@
 #include "Hammer.h"
 #include "Sword.h"
 #include "Wand.h"
-
+#include "Inventory.h"
 
 class Player : public Character
 {
-private:
-	MapDraw m_Draw;
 public:
 
 	FIGHT Attack_Try();
@@ -22,7 +20,7 @@ public:
 	void Has_Load_Weapon(string Kind, string Name, int Demage, int Price);
 	void Get_Weapon(Weapon * weapon);
 	void Load_Weapon(Weapon * weapon);
-	void Get_Inven_Wepaon();
+	
 
 	inline string Out_Weapon_Name()
 	{

@@ -3,6 +3,8 @@
 
 Character::Character()
 {
+	m_Bag = new Bag;
+	m_temWeapon = new PlayerWeapon;
 }
 
 void Character::Out_Information(int x, int y)

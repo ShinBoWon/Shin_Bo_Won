@@ -186,7 +186,9 @@ void Shop::Weapon_Store(Player *player )
 		else if (Select >= 0 && Select <= count )
 		{
 			if (player->Out_Gold() >= m_vecTemp[Select + Page * 5 - 1]->Get_Price())
-				player->Get_Weapon(m_vecTemp[Select + Page * 5 - 1]);// 지역 변수라.
+			{
+				player->Get_Weapon(m_vecTemp[Select + Page * 5 - 1]);// 무기를 사는 함수
+			}
 
 			// 무기를 선택하고 다시 선택 할 수 있으니 선택한 목록을 다시 그리는 조건
 			if (Page_Check) 
