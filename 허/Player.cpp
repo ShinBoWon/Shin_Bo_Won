@@ -3,7 +3,8 @@
 
 Player::Player()
 {
-	
+	m_Bag = new Bag;
+	m_temWeapon = new PlayerWeapon;
 }
 
 FIGHT Player::Attack_Try()
@@ -32,7 +33,7 @@ void Player::Load_Weapon(Weapon * weapon) // 저장된 무기 불러오기
 
 void Player::Get_Weapon(Weapon *weapon)
 {
-	if (m_eWeapon != WEAPON_NOT )
+	if (m_eWeapon == WEAPON_NOT )
 	{
 		m_Weapon = weapon;
 		Has_Weapon(m_Weapon->Get_Kind());
@@ -40,11 +41,47 @@ void Player::Get_Weapon(Weapon *weapon)
 	}
 	else
 	{
-		m_temWeapon->Set_Weapon(m_Weapon);
-		m_Bag->Add_Data(m_temWeapon);
+		//m_temWeapon->Set_Weapon(m_Weapon); 
+		PlayerWeapon* temp = new PlayerWeapon;
+		temp->Set_Weapon(m_Weapon);
+		m_Bag->Add_Data(temp);
+		// 기존에 있는 무기를 가방안에 넣고
+		// 새로 산 무기는 장비 
 		m_Weapon = weapon;
 		Has_Weapon(m_Weapon->Get_Kind());
 		m_Information.Gold -= weapon->Get_Price();
+	}
+}
+
+void Player::Weapon_Info(int Height)
+{
+	int Width = WIDTH / 5;
+	char Y_N = NULL;
+	if (m_eWeapon != WEAPON_NOT )
+	{
+		m_Draw.gotoxy(Width, Height);
+		cout << "무기 이름 : " << m_Weapon->Get_Name() << " 종류 : " << m_Weapon->Get_Kind();
+		m_Draw.gotoxy(Width, Height + 1);
+		cout << " 공격력 : " << m_Weapon->Get_Damege() << " 가격 : " << m_Weapon->Get_Price();
+	}
+	m_Draw.gotoxy(Width, Height + 2);
+	cout << " 교체 가능한 무기 :" << m_Bag->Get_Weapon_Count();	
+	m_Draw.gotoxy(Width, Height + 3);
+	cout << "교체 여부  Y or 아무키  :";
+	Y_N = getch();
+
+	if (m_Bag->Get_Weapon_Count() != 0 && Y_N == 'y')
+	{
+		int Serlect;
+		m_Draw.BoxErase(WIDTH, HEIGHT);
+		m_Bag->Show_List(Width, Height);
+		cout << " 꺼낼 무기 번호를 입력 하세요  : ";
+		cin >> Serlect;
+		m_temWeapon->Set_Weapon(m_Weapon);
+		m_Bag->Add_Data(m_temWeapon);
+		m_temWeapon = m_Bag->Get_Slot(Serlect);
+		m_Bag->Delete_Data(Serlect);
+		m_Weapon = m_temWeapon->Get_Address();
 	}
 }
 
@@ -54,7 +91,7 @@ void Player::Has_Weapon(string Kind)
 		m_eWeapon = WEAPON_DAGGER;
 	else if (Kind == "Bow")
 		m_eWeapon = WEAPON_BOW;
-	else if (Kind == "GUN")
+	else if (Kind == "Gun")
 		m_eWeapon = WEAPON_GUN;
 	else if (Kind == "Sword")
 		m_eWeapon = WEAPON_SWORD;
@@ -163,5 +200,5 @@ void Player::New_Data(string File)
 
 Player::~Player()
 {
-
+	delete m_Bag;
 }

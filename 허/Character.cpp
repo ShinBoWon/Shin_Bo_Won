@@ -3,8 +3,7 @@
 
 Character::Character()
 {
-	m_Bag = new Bag;
-	m_temWeapon = new PlayerWeapon;
+	
 }
 
 void Character::Out_Information(int x, int y)
@@ -22,14 +21,14 @@ void Character::Out_Information(int x, int y)
 	cout << m_Information.Get_Exp;
 	m_Draw.DrawMidText("Gold = ", x * 0.7f, y + 3);
 	cout << m_Information.Gold;
-	if (m_eWeapon != WEAPON_NOT) // 무기 존제 유무 체크
-	{
-		m_Draw.DrawMidText("무기타입 : " + m_Weapon->Get_Kind() + " 무기 이름 :" + m_Weapon->Get_Name() + "공격력 : " + to_string(m_Weapon->Get_Damege()), x*0.2f, y + 4);
-		m_Draw.gotoxy(x, y + 5);
-		// 가지고 있는 무기의 갯수 체크
-		// 만약에 갯수를 체크 했다면 무기를 바꿀것인지 아닌지 체크
-		// 무기를 바꾼다고 한다면 주소값만 바꾸는 방향으로 												 		
-	}																									 
+	//if (m_eWeapon != WEAPON_NOT) // 무기 존제 유무 체크
+	//{
+	//	m_Draw.DrawMidText("무기타입 : " + m_Weapon->Get_Kind() + " 무기 이름 :" + m_Weapon->Get_Name() + "공격력 : " + to_string(m_Weapon->Get_Damege()), x*0.2f, y + 4);
+	//	m_Draw.gotoxy(x, y + 5);
+	//	// 가지고 있는 무기의 갯수 체크
+	//	// 만약에 갯수를 체크 했다면 무기를 바꿀것인지 아닌지 체크
+	//	// 무기를 바꾼다고 한다면 주소값만 바꾸는 방향으로 												 		
+	//}																									 
 }
 
 void Character::Fight_Win(Character * Fighter)

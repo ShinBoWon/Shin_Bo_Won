@@ -217,6 +217,7 @@ void GamePlay::Game()
 		case PLAYING_PLAYER_INFO:
 			m_Draw.BoxErase(WIDTH, HEIGHT);
 			m_pHero->Out_Information(WIDTH, HEIGHT * 0.1f);
+			m_pHero->Weapon_Info( HEIGHT * 0.1f + 4);
 			getch();
 			break;
 		case PLAYING_MONSTER_INFO:

@@ -22,5 +22,12 @@ public:
 	Weapon();
 	virtual ~Weapon();
 
+	//Weapon& operator=(const Weapon& data)
+	//{
+	//	m_strName = data.m_strName;
+	//	m_strKind = data.m_strKind;
+	//	m_iPrice = data.m_iPrice;
+	//	m_iDamege = data.m_iDamege;
+	//}
 };
 

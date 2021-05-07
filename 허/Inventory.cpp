@@ -1,12 +1,5 @@
 #include "Inventory.h"
 
-void PlayerWeapon::Show_Data(int Height)
-{
-	m_Draw.gotoxy(WIDTH / 6, Height);
-	cout << "이름 : " << m_strName << " 종류 : " << m_strKind << endl;
-	cout <<" 공격력 : " << m_iDamege << " 가격 : " << m_iPrice << endl;
-}
-
 Weapon * PlayerWeapon::Get_Address()
 {
 	return m_Weapon;
@@ -22,9 +15,47 @@ void Bag::Add_Data(Slot* Data)
 	m_Bag.push_back(Data);
 }
 
-void Bag::Show_Data(int Height)
+void Bag::Show_List(int Width, int Height)
 {
-	int Start_Height = Height * 0.1f;
-	for (auto iter = m_Bag.begin(); iter != m_Bag.end(); iter++)	   // + 2개 씩
-		(*iter)->Show_Data(Start_Height += 2);
+	int Plus_x = 0;
+	int Weapon_Count = 1;
+	m_Draw.gotoxy(Width, Height);
+	for (auto iter = m_Bag.begin(); iter != m_Bag.end(); iter++)
+	{
+		if (Plus_x != 2)
+		{
+			cout << Weapon_Count << ". 이름 : " << (*iter)->Get_Name() << " 종류" << (*iter)->Get_Kind();
+			Plus_x++;
+		}
+		else
+		{
+			cout << Weapon_Count << ". 이름 : " << (*iter)->Get_Name() <<" 종류" << (*iter)->Get_Kind() << endl << endl;
+			Plus_x = 0;
+		}
+	}
+}
+
+Slot* Bag::Get_Slot(int Number)
+{
+	int Count = 0;
+	for (auto iter = m_Bag.begin(); iter != m_Bag.end(); iter++)
+	{
+		if (Count == Number)
+			return (*iter);
+		Count++;
+	}
+}
+
+void Bag::Delete_Data(int Number)
+{
+	int Count = 0;
+	for (auto iter = m_Bag.begin(); iter != m_Bag.end(); iter++)
+	{
+		if (Count == Number)
+		{
+			iter = m_Bag.erase(iter);
+			break;
+		}
+		Count++;
+	}
 }
